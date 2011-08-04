@@ -12,20 +12,31 @@
 
 #include <Wt/WApplication>
 
+#include "Session.hpp"
+
+#define fApp facts::Application::instance()
+
 namespace facts {
 
 /** Descendant of WApplication, used by all sessions of site
 */
 class Application : public Wt::WApplication {
 public:
-    Application();
+    Application(const Wt::WEnvironment& env, Server& server);
+
+    /** Return active application */
+    static Application* instance();
+
+    /** Return the database session */
+    Session& session() {
+        return session_;
+    }
 
 private:
+    Session session_;
 };
 
 }
 
 #endif
-
-
 

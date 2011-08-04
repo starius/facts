@@ -11,8 +11,10 @@
 #define FACTS_SERVER_HPP_
 
 #include <Wt/WServer>
+#include <Wt/Dbo/FixedSqlConnectionPool>
 
 namespace facts {
+namespace dbo = Wt::Dbo;
 
 /** Descendant of WApplication, used by all sessions of site
 */
@@ -20,7 +22,13 @@ class Server : public Wt::WServer {
 public:
     Server(int argc, char **argv);
 
+    /** Return pool of database connections */
+    dbo::FixedSqlConnectionPool& pool() {
+        return pool_;
+    }
+
 private:
+    dbo::FixedSqlConnectionPool pool_;
 };
 
 }
