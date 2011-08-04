@@ -30,7 +30,24 @@ public:
 #ifndef DOXYGEN_ONLY
     Fact();
 #endif
+
+    /** Create a new fact to be added to database */
     Fact(bool);
+
+    /** Set the text of the fact */
+    void set_text(const Wt::WString& text) {
+        text_ = text;
+    }
+
+    /** Get the text of the fact */
+    const Wt::WString& text() const {
+        return text_;
+    }
+
+    /** Get the datetime of creation of the fact */
+    const Wt::WDateTime& when_added() const {
+        return when_added_;
+    }
 
     template<class Action>
     void persist(Action& a) {
