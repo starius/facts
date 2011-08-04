@@ -8,3 +8,5 @@ doc/
 debug/
 release/
 
+facts.db
+
