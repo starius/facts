@@ -26,6 +26,9 @@ class Session : public dbo::Session {
 public:
     Session(Server& server);
 
+    /** Create schema, add several facts */
+    void reconsider();
+
     /** Return new database connection */
     static dbo::SqlConnection* new_connection();
 };

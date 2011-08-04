@@ -16,6 +16,8 @@ namespace facts {
 Server::Server(int argc, char **argv):
     pool_(Session::new_connection(), CONNECTIONS_IN_POOL) {
     setServerConfiguration(argc, argv);
+    Session s(*this);
+    s.reconsider();
 }
 
 }
