@@ -1,0 +1,10 @@
+syntax: glob
+*.o
+*build*
+doc/
+*.orig
+*.org
+
+debug/
+release/
+
