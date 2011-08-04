@@ -9,12 +9,14 @@
 
 #include <Wt/WEnvironment>
 
+#include "widgets/FactsWidget.hpp"
 #include "Application.hpp"
 
 namespace facts {
 
 Application::Application(const Wt::WEnvironment& env, Server& server):
     Wt::WApplication(env), session_(server) {
+    new FactsWidget(root());
 }
 
 Application* Application::instance() {
