@@ -16,7 +16,8 @@ namespace dbo = Wt::Dbo;
 
 namespace facts {
 
-FactWidget::FactWidget(FactPtr fact):
+FactWidget::FactWidget(FactPtr fact, Wt::WContainerWidget* p):
+    Wt::WContainerWidget(p),
     fact_(fact) {
     dbo::Transaction t(fApp->session());
     new Wt::WText(fact_->text(), this);

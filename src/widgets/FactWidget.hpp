@@ -21,7 +21,7 @@ namespace dbo = Wt::Dbo;
 */
 class FactWidget : public Wt::WContainerWidget {
 public:
-    FactWidget(FactPtr fact);
+    FactWidget(FactPtr fact, Wt::WContainerWidget* p=0);
 
 private:
     FactPtr fact_;
