@@ -10,6 +10,10 @@
  See the LICENSE file for terms of use.
 -->
 
+    <message id='facts.admin.Enter_admin'>Enter the administrator's page</message>
+    <message id='facts.admin.Enter_admin_password'>Enter admin password</message>
+    <message id='facts.admin.Wrong_admin_password'>Wrong password</message>
+
 </messages>
 
 
