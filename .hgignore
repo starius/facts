@@ -4,6 +4,7 @@ syntax: glob
 doc/
 *.orig
 *.org
+*.swp
 
 debug/
 release/
