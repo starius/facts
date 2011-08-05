@@ -12,12 +12,20 @@
 
 #include <Wt/WContainerWidget>
 
+namespace Wt {
+class WLineEdit;
+}
+
 namespace facts {
 
 /** Root widget of application */
 class FactsWidget : public Wt::WContainerWidget {
 public:
     FactsWidget(Wt::WContainerWidget* p=0);
+
+private:
+    void enter_admin_handler_();
+    void enter_handler_();
 };
 
 }

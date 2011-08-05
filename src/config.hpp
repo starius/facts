@@ -16,6 +16,7 @@ namespace facts {
 
 const int CONNECTIONS_IN_POOL = 10;
 const char* const SQLITE_DATABASE_NAME = "facts.db";
+const char* const ADMIN_PASSWORD = "asuperes";
 
 }
 
