@@ -8,7 +8,7 @@ doc/
 debug/
 release/
 
-facts.db
+*.db
 
 favicon.ico
 
