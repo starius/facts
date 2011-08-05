@@ -1,25 +1,23 @@
 
 build: debug
 
-files/favicon.ico: files/favicon.svg
-	inkscape -z -w 16 -e $@ $<
+run: run-debug
+
+all: debug release images
 
 images: files/favicon.ico
 
-release debug: $(wildcard src/**)
-	mkdir -p $@
-	if [ ! -d $@/locales ]; then ln -s ../locales $@/locales; fi
-	if [ ! -d $@/files ]; then ln -s ../files $@/files; fi
-	qmake "CONFIG-=release" "CONFIG-=debug" "CONFIG+=$@" src/facts.pro -o $@
-	$(MAKE) -C $@
+files/favicon.ico: files/favicon.svg
+	inkscape -z -w 16 -e $@ $<
 
-run: run-debug
+%/facts.wt: $(wildcard src/**) src/facts.pro
+	mkdir -p $*
+	qmake "CONFIG-=release" "CONFIG-=debug" "CONFIG+=$*" src/facts.pro -o $*
+	$(MAKE) -C $*
 
-run-debug: debug
-	./$</facts.wt --docroot $</files --http-address=0.0.0.0 --http-port=5711
+.SECONDEXPANSION:
+release debug: $$@/facts.wt
 
-run-release: release
-	./$</facts.wt --docroot $</files --http-address=0.0.0.0 --http-port=5712
-
-all: debug release images
+run-debug: debug images
+	./$</facts.wt --docroot=files --http-address=0.0.0.0 --http-port=5711
 
