@@ -1,6 +1,11 @@
 
 build: debug
 
+files/favicon.ico: files/favicon.svg
+	inkscape -z -w 16 -e $@ $<
+
+images: files/favicon.ico
+
 release debug: $(wildcard src/**)
 	mkdir -p $@
 	if [ ! -d $@/locales ]; then ln -s ../locales $@/locales; fi
@@ -15,4 +20,6 @@ run-debug: debug
 
 run-release: release
 	./$</facts.wt --docroot $</files --http-address=0.0.0.0 --http-port=5712
+
+all: debug release images
 
