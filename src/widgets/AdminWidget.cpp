@@ -7,12 +7,82 @@
  * See the LICENSE file for terms of use.
  */
 
+#include <boost/format.hpp>
+
+#include <Wt/WTableView>
+#include <Wt/Dbo/Transaction>
+#include <Wt/Dbo/Query>
+#include <Wt/Dbo/QueryModel>
+#include <Wt/WString>
+#include <Wt/WPushButton>
+
 #include "widgets/AdminWidget.hpp"
+#include "model/Fact.hpp"
+#include "Application.hpp"
 
 namespace facts {
 
+typedef FactPtr Result;
+typedef dbo::Query<Result> Q;
+typedef dbo::QueryModel<Result> BaseQM;
+
+const int n_column = 0;
+const int text_column = 1;
+const int when_added_column = 2;
+
+class FactListModel : public BaseQM {
+public:
+    FactListModel(const Q& query, Wt::WObject *parent=0) :
+        BaseQM(parent) {
+        setQuery(query);
+        addColumn("id", tr("facts.fact.id"));
+        addColumn("text", tr("facts.fact.text"), Wt::ItemIsEditable);
+        addColumn("when_added", tr("facts.fact.when_added"));
+    }
+
+    boost::any data(const Wt::WModelIndex& index,
+                    int role=Wt::DisplayRole) const {
+        dbo::Transaction t(fApp->session());
+        if (role == Wt::InternalPathRole && index.column() == n_column) {
+            FactPtr o = resultRow(index.row());
+            return str(boost::format("/fact/%i/") % o.id());
+        }
+        return BaseQM::data(index, role);
+    }
+
+    static Wt::WString tr(const char* key) {
+        return Wt::WString::tr(key);
+    }
+};
+
+class FactListView : public Wt::WTableView {
+public:
+    FactListView(FactListModel* model, Wt::WContainerWidget* p=0):
+        Wt::WTableView(p) {
+        setModel(model);
+        resize(770, 450);
+        setColumnWidth(n_column, 40);
+        setColumnWidth(text_column, 370);
+        setColumnWidth(when_added_column, 70);
+        setRowHeaderCount(1);
+    }
+};
+
 AdminWidget::AdminWidget(Wt::WContainerWidget* p):
     Wt::WContainerWidget(p) {
+    dbo::Transaction t(fApp->session());
+    Wt::WPushButton* save = new Wt::WPushButton(tr("facts.admin.Save"), this);
+    save->clicked().connect(this, &AdminWidget::save_handler_);
+    Q query = fApp->session().find<Fact>();
+    FactListModel* model = new FactListModel(query, this);
+    new FactListView(model, this);
+    t.commit();
+}
+
+void AdminWidget::save_handler_() {
+    dbo::Transaction t(fApp->session());
+    fApp->session().flush();
+    t.commit();
 }
 
 }

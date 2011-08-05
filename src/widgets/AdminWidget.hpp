@@ -20,6 +20,9 @@ them before creating this widget! */
 class AdminWidget : public Wt::WContainerWidget {
 public:
     AdminWidget(Wt::WContainerWidget* p=0);
+
+private:
+    void save_handler_();
 };
 
 }
