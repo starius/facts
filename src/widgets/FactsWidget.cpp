@@ -87,7 +87,7 @@ void FactsWidget::set_prev_fact_() {
     dbo::Transaction t(fApp->session());
     try {
         FactPtr fact = fApp->session().load<Fact>(shown_fact_.id() - 1);
-        set_fact_(fact);
+        set_fact(fact);
     } catch (dbo::ObjectNotFoundException)
     { }
     t.commit();
@@ -97,7 +97,7 @@ void FactsWidget::set_next_fact_() {
     dbo::Transaction t(fApp->session());
     try {
         FactPtr fact = fApp->session().load<Fact>(shown_fact_.id() + 1);
-        set_fact_(fact);
+        set_fact(fact);
     } catch (dbo::ObjectNotFoundException)
     { }
     t.commit();
@@ -111,7 +111,7 @@ void FactsWidget::set_random_fact_() {
         int offset = Wt::WRandom::get() % facts_number;
         fact = fApp->session().find<Fact>().offset(offset).limit(1).resultValue();
     }
-    set_fact_(fact);
+    set_fact(fact);
     t.commit();
 }
 
@@ -127,7 +127,7 @@ void FactsWidget::id_clicked_handler_() {
     refs->bindWidget("html", html);
 }
 
-void FactsWidget::set_fact_(FactPtr fact) {
+void FactsWidget::set_fact(FactPtr fact) {
     dbo::Transaction t(fApp->session());
     shown_fact_ = fact;
     setWidget(new FactWidget(fact));
