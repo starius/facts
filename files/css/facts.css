@@ -15,3 +15,8 @@ body {
     overflow-x: hidden !important;
 }
 
+.Wt-itemview {
+    background: transparent; !important;
+    border: none;
+}
+

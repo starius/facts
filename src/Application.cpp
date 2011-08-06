@@ -18,6 +18,7 @@ Application::Application(const Wt::WEnvironment& env, Server& server):
     Wt::WApplication(env), session_(server) {
     messageResourceBundle().use(Wt::WApplication::appRoot() +
                                 "locales/facts");
+    setCssTheme("polished");
     useStyleSheet("css/facts.css");
     new FactsWidget(root());
 }
