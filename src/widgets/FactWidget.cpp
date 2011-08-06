@@ -53,8 +53,8 @@ void FactWidget::vote_(short diff) {
     dbo::Transaction t(fApp->session());
     fact_.reread();
     VoteId vote_id;
-    vote_id.fact = fact_,
-            vote_id.ip = fApp->environment().clientAddress();
+    vote_id.fact = fact_;
+    vote_id.ip = fApp->environment().clientAddress();
     try {
         fApp->session().load<Vote>(vote_id);
         score_->setText(tr("facts.fact.Already_voted"));
