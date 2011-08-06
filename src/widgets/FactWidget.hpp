@@ -11,6 +11,7 @@
 #define FACTS_WIDGETS_FACTWIDGET_HPP_
 
 #include <Wt/WContainerWidget>
+#include <Wt/WText>
 
 #include "model/Fact.hpp"
 
@@ -25,6 +26,10 @@ public:
 
 private:
     FactPtr fact_;
+    Wt::WText* score_;
+
+    void set_score_();
+    void vote_(short diff);
 };
 
 }

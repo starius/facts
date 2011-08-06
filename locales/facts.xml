@@ -19,6 +19,7 @@
     <message id='facts.fact.id'>#</message>
     <message id='facts.fact.text'>fact</message>
     <message id='facts.fact.when_added'>addition time</message>
+    <message id='facts.fact.Already_voted'>Your IP address has already voted!</message>
 
 </messages>
 
