@@ -7,3 +7,7 @@
  * See the LICENSE file for terms of use.
  */
 
+.Wt-tableview .Wt-plaintable td {
+    overflow-x: hidden !important;
+}
+
