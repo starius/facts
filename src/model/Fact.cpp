@@ -15,7 +15,8 @@ Fact::Fact() {
 }
 
 Fact::Fact(bool):
-    when_added_(Wt::WDateTime::currentDateTime()) {
+    when_added_(Wt::WDateTime::currentDateTime()),
+    score_(0) {
 }
 
 }

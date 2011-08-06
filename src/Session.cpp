@@ -19,6 +19,7 @@ namespace facts {
 Session::Session(Server& server) {
     setConnectionPool(server.pool());
     mapClass<Fact>("facts_fact");
+    mapClass<Vote>("facts_vote");
 }
 
 void Session::reconsider() {

@@ -21,6 +21,8 @@ class Fact;
 typedef dbo::ptr<Fact> FactPtr;
 }
 
+#include "model/Vote.hpp"
+
 namespace facts {
 
 /** Model representing one fact in database of facts.
@@ -49,15 +51,26 @@ public:
         return when_added_;
     }
 
+    /** Get the score of the fact */
+    int score() const {
+        return score_;
+    }
+
     template<class Action>
     void persist(Action& a) {
         dbo::field(a, text_, "text");
         dbo::field(a, when_added_, "when_added");
+        dbo::field(a, score_, "score");
+        dbo::hasMany(a, votes_, dbo::ManyToOne, "fact");
     }
 
+    friend class Vote;
 private:
     Wt::WString text_;
     Wt::WDateTime when_added_;
+    int score_;
+
+    Votes votes_;
 };
 
 }
