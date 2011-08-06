@@ -5,10 +5,13 @@ run: run-debug
 
 all: debug release images
 
-images: files/favicon.ico
+images: files/favicon.ico files/img/logo.png
 
 files/favicon.ico: files/favicon.svg
 	inkscape -z -w 16 -e $@ $<
+
+files/img/logo.png: files/favicon.svg
+	inkscape -z -w 200 -e $@ $<
 
 %/facts.wt: $(wildcard src/**) src/facts.pro
 	mkdir -p $*
