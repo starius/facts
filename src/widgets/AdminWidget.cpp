@@ -62,8 +62,8 @@ public:
         setModel(model);
         resize(770, 450);
         setColumnWidth(n_column, 40);
-        setColumnWidth(text_column, 370);
-        setColumnWidth(when_added_column, 70);
+        setColumnWidth(text_column, 570);
+        setColumnWidth(when_added_column, 75);
         setRowHeaderCount(1);
     }
 };
