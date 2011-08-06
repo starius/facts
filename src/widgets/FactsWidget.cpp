@@ -68,6 +68,28 @@ void FactsWidget::enter_handler_() {
     }
 }
 
+void FactsWidget::set_prev_fact_() {
+    dbo::Transaction t(fApp->session());
+    try {
+        FactPtr fact = fApp->session().load<Fact>(shown_fact_.id() - 1);
+        set_fact_(fact);
+    } catch (dbo::ObjectNotFoundException)
+    { }
+    t.commit();
+}
+
+void FactsWidget::set_next_fact_() {
+    dbo::Transaction t(fApp->session());
+    try {
+        FactPtr fact = fApp->session().load<Fact>(shown_fact_.id() + 1);
+        set_fact_(fact);
+    } catch (dbo::ObjectNotFoundException)
+    { }
+    t.commit();
+}
+
+void FactsWidget::set_next_fact_();
+
 void FactsWidget::set_random_fact_() {
     dbo::Transaction t(fApp->session());
     int facts_number = fApp->session().query<int>("select count(1) from facts_fact");
@@ -96,6 +118,13 @@ void FactsWidget::add_west_() {
     Wt::WImage* update = new Wt::WImage("img/update.png", west);
     update->clicked().connect(this, &FactsWidget::set_random_fact_);
     update->decorationStyle().setCursor(Wt::PointingHandCursor);
+    update->setInline(false);
+    Wt::WImage* prev = new Wt::WImage("img/left-arrow.png", west);
+    prev->clicked().connect(this, &FactsWidget::set_prev_fact_);
+    prev->decorationStyle().setCursor(Wt::PointingHandCursor);
+    Wt::WImage* next = new Wt::WImage("img/right-arrow.png", west);
+    next->clicked().connect(this, &FactsWidget::set_next_fact_);
+    next->decorationStyle().setCursor(Wt::PointingHandCursor);
 }
 
 }
