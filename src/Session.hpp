@@ -1,6 +1,6 @@
 /*
  * facts, random fact viewer
- * Copyright (C) 2010 Boris Nagaev
+ * Copyright (C) 2011 Boris Nagaev
  *
  * facts is licensed under the GNU GPL Version 2.
  * Other versions of the GPL do not apply.
