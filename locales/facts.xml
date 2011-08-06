@@ -14,6 +14,7 @@
     <message id='facts.admin.Enter_admin_password'>Enter admin password</message>
     <message id='facts.admin.Wrong_admin_password'>Wrong password</message>
     <message id='facts.admin.Save'>Save</message>
+    <message id='facts.admin.Add'>Add</message>
 
     <message id='facts.fact.id'>#</message>
     <message id='facts.fact.text'>fact</message>

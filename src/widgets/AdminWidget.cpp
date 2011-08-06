@@ -73,15 +73,25 @@ AdminWidget::AdminWidget(Wt::WContainerWidget* p):
     dbo::Transaction t(fApp->session());
     Wt::WPushButton* save = new Wt::WPushButton(tr("facts.admin.Save"), this);
     save->clicked().connect(this, &AdminWidget::save_handler_);
+    Wt::WPushButton* add = new Wt::WPushButton(tr("facts.admin.Add"), this);
+    add->clicked().connect(this, &AdminWidget::add_handler_);
     Q query = fApp->session().find<Fact>();
-    FactListModel* model = new FactListModel(query, this);
-    new FactListView(model, this);
+    model_ = new FactListModel(query, this);
+    new FactListView(model_, this);
     t.commit();
 }
 
 void AdminWidget::save_handler_() {
     dbo::Transaction t(fApp->session());
     fApp->session().flush();
+    t.commit();
+}
+
+void AdminWidget::add_handler_() {
+    dbo::Transaction t(fApp->session());
+    fApp->session().add(new Fact(true));
+    fApp->session().flush();
+    model_->reload();
     t.commit();
 }
 
