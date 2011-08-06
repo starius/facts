@@ -28,17 +28,14 @@ namespace facts {
 FactsWidget::FactsWidget(Wt::WContainerWidget* p):
     Wt::WContainerWidget(p) {
     layout_ = new Wt::WBorderLayout();
-    setLayout(layout_, Wt::AlignTop | Wt::AlignCenter);
+    setLayout(layout_, Wt::AlignTop | Wt::AlignJustify);
     Wt::WContainerWidget* logo_c = new Wt::WContainerWidget();
     Wt::WImage* logo = new Wt::WImage("img/logo.png", logo_c);
     logo->clicked().connect(this, &FactsWidget::enter_admin_handler_);
     logo_c->setContentAlignment(Wt::AlignCenter);
     layout_->addWidget(logo_c, Wt::WBorderLayout::North);
     set_random_fact_();
-    Wt::WImage* update = new Wt::WImage("img/update.png");
-    update->clicked().connect(this, &FactsWidget::set_random_fact_);
-    update->decorationStyle().setCursor(Wt::PointingHandCursor);
-    setWidget(update, Wt::WBorderLayout::West);
+    add_west_();
 }
 
 void FactsWidget::setWidget(Wt::WWidget* widget, Wt::WBorderLayout::Position position) {
@@ -84,6 +81,16 @@ void FactsWidget::set_fact_(FactPtr fact) {
     dbo::Transaction t(fApp->session());
     setWidget(new FactWidget(fact));
     t.commit();
+}
+
+void FactsWidget::add_west_() {
+    Wt::WContainerWidget* west = new Wt::WContainerWidget();
+    setWidget(west, Wt::WBorderLayout::West);
+    west->setMinimumSize(175, Wt::WLength());
+    west->setContentAlignment(Wt::AlignCenter);
+    Wt::WImage* update = new Wt::WImage("img/update.png", west);
+    update->clicked().connect(this, &FactsWidget::set_random_fact_);
+    update->decorationStyle().setCursor(Wt::PointingHandCursor);
 }
 
 }

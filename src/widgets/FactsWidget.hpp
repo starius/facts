@@ -36,6 +36,7 @@ private:
     void enter_handler_();
     void set_random_fact_();
     void set_fact_(FactPtr fact);
+    void add_west_();
 };
 
 }
