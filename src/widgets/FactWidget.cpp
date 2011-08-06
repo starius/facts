@@ -26,7 +26,8 @@ FactWidget::FactWidget(FactPtr fact, Wt::WContainerWidget* p):
     fact_(fact) {
     resize(Wt::WLength(70, Wt::WLength::Percentage), Wt::WLength());
     dbo::Transaction t(fApp->session());
-    new Wt::WText(fact_->text(), this);
+    Wt::WText* text = new Wt::WText(fact_->text(), this);
+    text->setStyleClass("facts-text");
     new Wt::WBreak(this);
     Wt::WImage* diff_minus = new Wt::WImage("img/down-arrow.png", this);
     score_ = new Wt::WText(this);

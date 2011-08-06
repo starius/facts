@@ -9,6 +9,12 @@
 
 body {
     background: #EDEDED;
+    font: 16px 'Arial', Tahoma, Arial;
+    cursor: default;
+}
+
+td {
+    font: 16px 'Arial', Tahoma, Arial;
 }
 
 .Wt-tableview .Wt-plaintable td {
@@ -18,5 +24,10 @@ body {
 .Wt-itemview {
     background: transparent; !important;
     border: none;
+}
+
+.facts-text {
+    font: 23px 'Arial', Tahoma, Arial;
+    color: #9B9B9B;
 }
 
