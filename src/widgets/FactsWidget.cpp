@@ -14,6 +14,7 @@
 #include <Wt/WText>
 #include <Wt/WEnvironment>
 #include <Wt/WImage>
+#include <Wt/WTemplate>
 
 #include "widgets/FactsWidget.hpp"
 #include "widgets/FactWidget.hpp"
@@ -24,6 +25,20 @@
 #include "config.hpp"
 
 namespace facts {
+
+class AutoSelectedEdit : public Wt::WLineEdit {
+public:
+    AutoSelectedEdit(const Wt::WString& content,
+                     Wt::WContainerWidget* p=0, int size=72):
+        Wt::WLineEdit(content, p) {
+        setTextSize(size);
+        clicked().connect(
+            "function(object, event) {"
+            "$(object).select();"
+            "}"
+        );
+    }
+};
 
 FactsWidget::FactsWidget(Wt::WContainerWidget* p):
     Wt::WContainerWidget(p) {
@@ -100,6 +115,18 @@ void FactsWidget::set_random_fact_() {
     t.commit();
 }
 
+void FactsWidget::id_clicked_handler_() {
+    Wt::WTemplate* refs = new Wt::WTemplate(tr("facts.fact.references_template"));
+    setWidget(refs);
+    std::string url = fApp->makeAbsoluteUrl(fApp->bookmarkUrl(fApp->fact_path(shown_fact_)));
+    AutoSelectedEdit* simple = new AutoSelectedEdit(url);
+    AutoSelectedEdit* forum = new AutoSelectedEdit(tr("facts.fact.forum").arg(url));
+    AutoSelectedEdit* html = new AutoSelectedEdit(tr("facts.fact.html").arg(url));
+    refs->bindWidget("simple", simple);
+    refs->bindWidget("forum", forum);
+    refs->bindWidget("html", html);
+}
+
 void FactsWidget::set_fact_(FactPtr fact) {
     dbo::Transaction t(fApp->session());
     shown_fact_ = fact;
@@ -123,6 +150,7 @@ void FactsWidget::add_west_() {
     prev->decorationStyle().setCursor(Wt::PointingHandCursor);
     prev->setVerticalAlignment(Wt::AlignMiddle);
     fact_id_ = new Wt::WPushButton(west);
+    fact_id_->clicked().connect(this, &FactsWidget::id_clicked_handler_);
     fact_id_->setVerticalAlignment(Wt::AlignMiddle);
     Wt::WImage* next = new Wt::WImage("img/right-arrow.png", west);
     next->clicked().connect(this, &FactsWidget::set_next_fact_);

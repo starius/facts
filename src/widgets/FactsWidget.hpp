@@ -40,6 +40,7 @@ private:
     void set_random_fact_();
     void set_prev_fact_();
     void set_next_fact_();
+    void id_clicked_handler_();
     void set_fact_(FactPtr fact);
     void add_west_();
 };
