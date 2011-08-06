@@ -1,0 +1,25 @@
+facts, random fact viewer
+Copyright (C) 2010 Boris Nagaev
+
+facts is licensed under the GNU GPL Version 2.
+Other versions of the GPL do not apply.
+
+=======================================================================
+
+Runtime-requirements:
+ * Wt 3.1.10+: http://www.webtoolkit.eu/wt/doc/reference/html/InstallationUnix.html
+   at least libwt, libwthttp, libwtsqlite3
+
+Build-requirements:
+ * g++ 4.5+ (lto is used in release version)
+ * qmake
+ * inkskape (Font Steve is used for logo and favicon)
+ * convert by ImageMagick
+ * upx (is used to compress release version)
+
+To compile run `make`. The default target of make is building of debug
+version of program. To build release version, run `make release`.
+
+To run the program:
+    make run-debug
+
