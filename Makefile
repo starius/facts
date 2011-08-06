@@ -15,7 +15,8 @@ all: debug release images
 release debug: $$@/facts.wt
 
 run-debug: debug images
-	./$</facts.wt --docroot=files --http-address=0.0.0.0 --http-port=5711
+	./$</facts.wt --http-address=0.0.0.0 \
+	--http-port=5711 --docroot="files/;/resources,/img,/js,/css,/tinymce,/favicon.ico"
 
 images: files/favicon.ico files/img/logo.png files/img/update.png \
 	files/img/right-arrow.png files/img/left-arrow.png files/img/up-arrow.png files/img/down-arrow.png
