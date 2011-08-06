@@ -8,6 +8,8 @@
  */
 
 #include <Wt/WEnvironment>
+#include <Wt/Dbo/Transaction>
+namespace dbo = Wt::Dbo;
 
 #include "widgets/FactsWidget.hpp"
 #include "Application.hpp"
@@ -21,7 +23,9 @@ Application::Application(const Wt::WEnvironment& env, Server& server):
                                 "locales/facts");
     setCssTheme("polished");
     useStyleSheet("css/facts.css");
-    new FactsWidget(root());
+    facts_ = new FactsWidget(root());
+    internalPathChanged().connect(this, &Application::path_changed_handler_);
+    path_changed_handler_();
 }
 
 Application* Application::instance() {
@@ -30,6 +34,21 @@ Application* Application::instance() {
 
 std::string Application::fact_path(FactPtr fact) const {
     return str(fact_path_format_ % fact.id());
+}
+
+void Application::path_changed_handler_() {
+    dbo::Transaction t(session());
+    std::string section = internalPathNextPart("/");
+    if (section == "fact") {
+        std::string fact_str = internalPathNextPart("/fact/");
+        try {
+            int fact_id = boost::lexical_cast<int>(fact_str);
+            FactPtr fact = session().load<Fact>(fact_id);
+            facts_->set_fact(fact);
+        } catch (dbo::ObjectNotFoundException)
+        { }
+    }
+    t.commit();
 }
 
 }

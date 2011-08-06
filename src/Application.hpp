@@ -20,6 +20,7 @@
 #define fApp facts::Application::instance()
 
 namespace facts {
+class FactsWidget;
 
 /** Descendant of WApplication, used by all sessions of site
 */
@@ -41,6 +42,9 @@ public:
 private:
     Session session_;
     mutable boost::format fact_path_format_;
+    FactsWidget* facts_;
+
+    void path_changed_handler_();
 };
 
 }
