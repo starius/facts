@@ -34,8 +34,8 @@ FactsWidget::FactsWidget(Wt::WContainerWidget* p):
     logo->clicked().connect(this, &FactsWidget::enter_admin_handler_);
     logo_c->setContentAlignment(Wt::AlignCenter);
     layout_->addWidget(logo_c, Wt::WBorderLayout::North);
-    set_random_fact_();
     add_west_();
+    set_random_fact_();
 }
 
 void FactsWidget::setWidget(Wt::WWidget* widget, Wt::WBorderLayout::Position position) {
@@ -88,8 +88,6 @@ void FactsWidget::set_next_fact_() {
     t.commit();
 }
 
-void FactsWidget::set_next_fact_();
-
 void FactsWidget::set_random_fact_() {
     dbo::Transaction t(fApp->session());
     int facts_number = fApp->session().query<int>("select count(1) from facts_fact");
@@ -107,6 +105,7 @@ void FactsWidget::set_fact_(FactPtr fact) {
     shown_fact_ = fact;
     setWidget(new FactWidget(fact));
     fApp->setTitle(fact->text());
+    fact_id_->setText(boost::lexical_cast<std::string>(fact.id()));
     t.commit();
 }
 
@@ -122,9 +121,13 @@ void FactsWidget::add_west_() {
     Wt::WImage* prev = new Wt::WImage("img/left-arrow.png", west);
     prev->clicked().connect(this, &FactsWidget::set_prev_fact_);
     prev->decorationStyle().setCursor(Wt::PointingHandCursor);
+    prev->setVerticalAlignment(Wt::AlignMiddle);
+    fact_id_ = new Wt::WPushButton(west);
+    fact_id_->setVerticalAlignment(Wt::AlignMiddle);
     Wt::WImage* next = new Wt::WImage("img/right-arrow.png", west);
     next->clicked().connect(this, &FactsWidget::set_next_fact_);
     next->decorationStyle().setCursor(Wt::PointingHandCursor);
+    next->setVerticalAlignment(Wt::AlignMiddle);
 }
 
 }

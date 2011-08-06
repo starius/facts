@@ -17,6 +17,7 @@
 
 namespace Wt {
 class WLineEdit;
+class WPushButton;
 }
 
 namespace facts {
@@ -30,6 +31,7 @@ private:
     Wt::WBorderLayout* layout_;
     Wt::WLineEdit* admin_password_;
     FactPtr shown_fact_;
+    Wt::WPushButton* fact_id_;
 
     void setWidget(Wt::WWidget* widget,
                    Wt::WBorderLayout::Position position=Wt::WBorderLayout::Center);
