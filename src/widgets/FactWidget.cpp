@@ -19,6 +19,7 @@ namespace facts {
 FactWidget::FactWidget(FactPtr fact, Wt::WContainerWidget* p):
     Wt::WContainerWidget(p),
     fact_(fact) {
+    resize(Wt::WLength(70, Wt::WLength::Percentage), Wt::WLength());
     dbo::Transaction t(fApp->session());
     new Wt::WText(fact_->text(), this);
     t.commit();
