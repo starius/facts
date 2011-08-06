@@ -29,6 +29,7 @@ public:
 private:
     Wt::WBorderLayout* layout_;
     Wt::WLineEdit* admin_password_;
+    FactPtr shown_fact_;
 
     void setWidget(Wt::WWidget* widget,
                    Wt::WBorderLayout::Position position=Wt::WBorderLayout::Center);

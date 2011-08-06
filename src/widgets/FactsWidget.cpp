@@ -71,14 +71,18 @@ void FactsWidget::enter_handler_() {
 void FactsWidget::set_random_fact_() {
     dbo::Transaction t(fApp->session());
     int facts_number = fApp->session().query<int>("select count(1) from facts_fact");
-    int i = Wt::WRandom::get() % facts_number;
-    FactPtr fact = fApp->session().find<Fact>().offset(i).limit(1).resultValue();
+    FactPtr fact;
+    while (!fact || (fact == shown_fact_ && facts_number > 1)) {
+        int offset = Wt::WRandom::get() % facts_number;
+        fact = fApp->session().find<Fact>().offset(offset).limit(1).resultValue();
+    }
     set_fact_(fact);
     t.commit();
 }
 
 void FactsWidget::set_fact_(FactPtr fact) {
     dbo::Transaction t(fApp->session());
+    shown_fact_ = fact;
     setWidget(new FactWidget(fact));
     t.commit();
 }
