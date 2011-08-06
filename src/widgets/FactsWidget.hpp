@@ -11,6 +11,9 @@
 #define FACTS_WIDGETS_FACTSWIDGET_HPP_
 
 #include <Wt/WContainerWidget>
+#include <Wt/WBorderLayout>
+
+#include "model/Fact.hpp"
 
 namespace Wt {
 class WLineEdit;
@@ -24,8 +27,15 @@ public:
     FactsWidget(Wt::WContainerWidget* p=0);
 
 private:
+    Wt::WBorderLayout* layout_;
+    Wt::WLineEdit* admin_password_;
+
+    void setWidget(Wt::WWidget* widget,
+                   Wt::WBorderLayout::Position position=Wt::WBorderLayout::Center);
     void enter_admin_handler_();
     void enter_handler_();
+    void set_random_fact_();
+    void set_fact_(FactPtr fact);
 };
 
 }

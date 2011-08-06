@@ -13,6 +13,7 @@
 #include <Wt/WLineEdit>
 #include <Wt/WText>
 #include <Wt/WEnvironment>
+#include <Wt/WImage>
 
 #include "widgets/FactsWidget.hpp"
 #include "widgets/FactWidget.hpp"
@@ -26,34 +27,59 @@ namespace facts {
 
 FactsWidget::FactsWidget(Wt::WContainerWidget* p):
     Wt::WContainerWidget(p) {
-    Session& s = fApp->session();
-    dbo::Transaction t(s);
-    int facts_number = s.query<int>("select count(1) from facts_fact");
-    int i = Wt::WRandom::get() % facts_number;
-    FactPtr fact = s.find<Fact>().offset(i).limit(1).resultValue();
-    new FactWidget(fact, this);
-    t.commit();
-    Wt::WPushButton* admin = new Wt::WPushButton(tr("facts.admin.Enter_admin"), this);
-    admin->clicked().connect(this, &FactsWidget::enter_admin_handler_);
+    layout_ = new Wt::WBorderLayout();
+    setLayout(layout_, Wt::AlignTop | Wt::AlignCenter);
+    Wt::WContainerWidget* logo_c = new Wt::WContainerWidget();
+    Wt::WImage* logo = new Wt::WImage("img/logo.png", logo_c);
+    logo->clicked().connect(this, &FactsWidget::enter_admin_handler_);
+    logo_c->setContentAlignment(Wt::AlignCenter);
+    layout_->addWidget(logo_c, Wt::WBorderLayout::North);
+    set_random_fact_();
+}
+
+void FactsWidget::setWidget(Wt::WWidget* widget, Wt::WBorderLayout::Position position) {
+    WWidget* old = layout_->widgetAt(position);
+    if (old) {
+        delete old;
+        layout_->removeWidget(old);
+    }
+    layout_->addWidget(widget, position);
 }
 
 void FactsWidget::enter_admin_handler_() {
-    static_cast<Wt::WPushButton*>(sender())->hide();
-    Wt::WLineEdit* admin_password = new Wt::WLineEdit(this);
-    admin_password->setEchoMode(Wt::WLineEdit::Password);
-    admin_password->setEmptyText(tr("facts.admin.Enter_admin_password"));
-    admin_password->enterPressed().connect(this, &FactsWidget::enter_handler_);
+    Wt::WContainerWidget* p = new Wt::WContainerWidget();
+    admin_password_ = new Wt::WLineEdit(p);
+    admin_password_->setEchoMode(Wt::WLineEdit::Password);
+    admin_password_->setEmptyText(tr("facts.admin.Enter_admin_password"));
+    admin_password_->enterPressed().connect(this, &FactsWidget::enter_handler_);
+    if (!fApp->environment().ajax()) {
+        Wt::WPushButton* enter = new Wt::WPushButton(tr("facts.admin.Enter_admin"), p);
+        enter->clicked().connect(this, &FactsWidget::enter_handler_);
+    }
+    setWidget(p);
 }
 
 void FactsWidget::enter_handler_() {
-    Wt::WLineEdit* admin_password = static_cast<Wt::WLineEdit*>(sender());
-    if (admin_password->text() == ADMIN_PASSWORD) {
-        clear();
-        new AdminWidget(this);
+    if (admin_password_->text() == ADMIN_PASSWORD) {
+        setWidget(new AdminWidget());
     } else {
-        admin_password->hide();
-        new Wt::WText(tr("facts.admin.Wrong_admin_password"), this);
+        setWidget(new Wt::WText(tr("facts.admin.Wrong_admin_password")));
     }
+}
+
+void FactsWidget::set_random_fact_() {
+    dbo::Transaction t(fApp->session());
+    int facts_number = fApp->session().query<int>("select count(1) from facts_fact");
+    int i = Wt::WRandom::get() % facts_number;
+    FactPtr fact = fApp->session().find<Fact>().offset(i).limit(1).resultValue();
+    set_fact_(fact);
+    t.commit();
+}
+
+void FactsWidget::set_fact_(FactPtr fact) {
+    dbo::Transaction t(fApp->session());
+    setWidget(new FactWidget(fact));
+    t.commit();
 }
 
 }
