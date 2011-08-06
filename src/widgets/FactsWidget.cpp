@@ -84,6 +84,7 @@ void FactsWidget::set_fact_(FactPtr fact) {
     dbo::Transaction t(fApp->session());
     shown_fact_ = fact;
     setWidget(new FactWidget(fact));
+    fApp->setTitle(fact->text());
     t.commit();
 }
 
