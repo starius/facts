@@ -12,5 +12,5 @@ release/
 *.db
 
 favicon.ico
-logo.png
+*.png
 

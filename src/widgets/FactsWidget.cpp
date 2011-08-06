@@ -35,6 +35,10 @@ FactsWidget::FactsWidget(Wt::WContainerWidget* p):
     logo_c->setContentAlignment(Wt::AlignCenter);
     layout_->addWidget(logo_c, Wt::WBorderLayout::North);
     set_random_fact_();
+    Wt::WImage* update = new Wt::WImage("img/update.png");
+    update->clicked().connect(this, &FactsWidget::set_random_fact_);
+    update->decorationStyle().setCursor(Wt::PointingHandCursor);
+    setWidget(update, Wt::WBorderLayout::West);
 }
 
 void FactsWidget::setWidget(Wt::WWidget* widget, Wt::WBorderLayout::Position position) {
