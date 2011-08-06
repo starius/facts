@@ -106,6 +106,7 @@ public:
         dbo::field(a, diff_, "diff");
     }
 
+    friend class Session;
 private:
     VoteId vote_id_;
     Wt::WDateTime when_added_;

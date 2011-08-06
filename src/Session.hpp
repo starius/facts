@@ -31,6 +31,9 @@ public:
 
     /** Return new database connection */
     static dbo::SqlConnection* new_connection();
+
+private:
+    void reconsider_scores_();
 };
 
 }

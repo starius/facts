@@ -64,6 +64,7 @@ public:
         dbo::hasMany(a, votes_, dbo::ManyToOne, "fact");
     }
 
+    friend class Session;
     friend class Vote;
 private:
     Wt::WString text_;

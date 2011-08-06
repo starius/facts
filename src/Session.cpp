@@ -7,6 +7,9 @@
  * See the LICENSE file for terms of use.
  */
 
+#include <boost/tuple/tuple.hpp>
+#include <boost/foreach.hpp>
+
 #include <Wt/Dbo/backend/Sqlite3>
 #include <Wt/Dbo/Transaction>
 
@@ -38,6 +41,24 @@ void Session::reconsider() {
         std::cerr << e.what() << std::endl;
         std::cerr << "Using existing database" << std::endl;
     }
+    reconsider_scores_();
+}
+
+void Session::reconsider_scores_() {
+    dbo::Transaction t(*this);
+    typedef boost::tuple<FactPtr, int> R;
+    typedef dbo::collection<R> Rs;
+    typedef dbo::Query<R> Q;
+    Q q = query<R>("select F, sum(V.diff) from facts_vote V "
+                   " left join facts_fact F on F.id=V.fact_id ");
+    q.groupBy("F");
+    Rs rs = q;
+    BOOST_FOREACH (R& r, rs) {
+        FactPtr& fact = r.get<0>();
+        int score = r.get<1>();
+        fact.modify()->score_ = score;
+    }
+    t.commit();
 }
 
 dbo::SqlConnection* Session::new_connection() {
