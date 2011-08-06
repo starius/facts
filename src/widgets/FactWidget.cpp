@@ -32,6 +32,9 @@ FactWidget::FactWidget(FactPtr fact, Wt::WContainerWidget* p):
     score_ = new Wt::WText(this);
     Wt::WImage* diff_plus = new Wt::WImage("img/up-arrow.png", this);
     set_score_();
+    diff_minus->setVerticalAlignment(Wt::AlignMiddle);
+    score_->setVerticalAlignment(Wt::AlignMiddle);
+    diff_plus->setVerticalAlignment(Wt::AlignMiddle);
     diff_minus->clicked().connect(boost::bind(&FactWidget::vote_, this, -1));
     diff_plus->clicked().connect(boost::bind(&FactWidget::vote_, this, +1));
     diff_minus->decorationStyle().setCursor(Wt::PointingHandCursor);
