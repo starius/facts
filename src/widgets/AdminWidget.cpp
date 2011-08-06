@@ -7,8 +7,6 @@
  * See the LICENSE file for terms of use.
  */
 
-#include <boost/format.hpp>
-
 #include <Wt/WTableView>
 #include <Wt/Dbo/Transaction>
 #include <Wt/Dbo/Query>
@@ -45,7 +43,7 @@ public:
         dbo::Transaction t(fApp->session());
         if (role == Wt::InternalPathRole && index.column() == n_column) {
             FactPtr o = resultRow(index.row());
-            return str(boost::format("/fact/%i/") % o.id());
+            return fApp->fact_path(o);
         }
         return BaseQM::data(index, role);
     }

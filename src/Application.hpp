@@ -10,9 +10,12 @@
 #ifndef FACTS_APPLICATION_HPP_
 #define FACTS_APPLICATION_HPP_
 
+#include <boost/format.hpp>
+
 #include <Wt/WApplication>
 
 #include "Session.hpp"
+#include "model/Fact.hpp"
 
 #define fApp facts::Application::instance()
 
@@ -32,8 +35,12 @@ public:
         return session_;
     }
 
+    /** Genarate internel path for the fact */
+    std::string fact_path(FactPtr fact) const;
+
 private:
     Session session_;
+    mutable boost::format fact_path_format_;
 };
 
 }

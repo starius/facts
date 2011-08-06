@@ -15,7 +15,8 @@
 namespace facts {
 
 Application::Application(const Wt::WEnvironment& env, Server& server):
-    Wt::WApplication(env), session_(server) {
+    Wt::WApplication(env), session_(server),
+    fact_path_format_("/fact/%i/") {
     messageResourceBundle().use(Wt::WApplication::appRoot() +
                                 "locales/facts");
     setCssTheme("polished");
@@ -25,6 +26,10 @@ Application::Application(const Wt::WEnvironment& env, Server& server):
 
 Application* Application::instance() {
     return static_cast<Application*>(Wt::WApplication::instance());
+}
+
+std::string Application::fact_path(FactPtr fact) const {
+    return str(fact_path_format_ % fact.id());
 }
 
 }
