@@ -92,7 +92,7 @@ endif
 ifneq (,$(findstring monit,$(INTEGRATE_INTO)))
 	cp --backup monit.in $(MONIT_CONF)
 	sed 's@PID_FILE@$(PID_FILE)@' -i $(MONIT_CONF)
-	sed 's@EXE_PATH@$(EXE_PATH)@' -i $(MONIT_CONF)
+	sed 's@STARTER@$(STARTER)@' -i $(MONIT_CONF)
 	sed 's@RUN_USER@$(RUN_USER)@' -i $(MONIT_CONF)
 	sed 's@RUN_GROUP@$(RUN_GROUP)@' -i $(MONIT_CONF)
 	sed 's@ADDRESS@$(ADDRESS)@' -i $(MONIT_CONF)
