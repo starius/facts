@@ -5,6 +5,10 @@ PORT = 5711
 ADDRESS = 127.0.0.1
 RUN_USER = www-data
 RUN_GROUP = www-data
+INTEGRATE_INTO = nginx,monit
+NGINX_PREFIX =
+SERVER_NAME = facts
+NGINX_CONF = /etc/nginx/sites-available/facts
 
 prefix = /usr/local
 exec_prefix = $(prefix)
@@ -17,6 +21,7 @@ bindir = $(exec_prefix)/bin
 FCGI_RUN_DIR_ORIGINAL = /var/run/wt # as specified in /etc/wt/wt_config.xml
 FCGI_RUN_DIR_INSTALL = $(localstatedir)/run/wt
 WT_CONFIG_INSTALL = $(sysconfdir)/facts/wt_config.xml
+NGINX_CONF2 = $(subst available,enabled,$(NGINX_CONF))
 
 .SECONDEXPANSION:
 
@@ -69,6 +74,14 @@ install: $$(EXE) images $$(WT_CONFIG)
 ifeq ($(MODE), fcgi)
 	mkdir -p $(FCGI_RUN_DIR_INSTALL)
 	chown $(RUN_USER):$(RUN_GROUP) $(FCGI_RUN_DIR_INSTALL)
+endif
+ifneq (,$(findstring nginx,$(INTEGRATE_INTO)))
+	cp --backup nginx.in $(NGINX_CONF)
+	sed 's@SERVER_NAME@$(SERVER_NAME)@' -i $(NGINX_CONF)
+	sed 's@NGINX_PREFIX@$(NGINX_PREFIX)@' -i $(NGINX_CONF)
+	sed 's@DOCROOT_PARENT@$(DOCROOT_PARENT)@' -i $(NGINX_CONF)
+	sed 's@PORT@$(PORT)@' -i $(NGINX_CONF)
+	if [ ! -f $(NGINX_CONF2) ]; then ln -s $(NGINX_CONF) $(NGINX_CONF2); fi
 endif
 
 uninstall:

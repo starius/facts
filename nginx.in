@@ -1,0 +1,18 @@
+
+server {
+
+	listen	 127.0.0.1:80;
+	server_name  SERVER_NAME;
+	access_log	/var/log/nginx/facts.access.log;
+
+	location ~ /NGINX_PREFIX(img|fav|res|css).* {
+		root DOCROOT_PARENT;
+	}
+
+	location /NGINX_PREFIX {
+		fastcgi_pass   127.0.0.1:PORT;
+		include fastcgi_params;
+	}
+
+}
+
