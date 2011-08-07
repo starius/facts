@@ -20,10 +20,10 @@ localstatedir = $(prefix)/var
 bindir = $(exec_prefix)/bin
 
 FCGI_RUN_DIR_ORIGINAL = /var/run/wt # as specified in /etc/wt/wt_config.xml
-FCGI_RUN_DIR_INSTALL = $(localstatedir)/run/wt
+VAR_RUN = $(localstatedir)/run/facts
 WT_CONFIG_INSTALL = $(sysconfdir)/facts/wt_config.xml
 NGINX_CONF2 = $(subst available,enabled,$(NGINX_CONF))
-PID_FILE = $(localstatedir)/run/facts.pid
+PID_FILE = $(VAR_RUN)/facts.pid
 
 .SECONDEXPANSION:
 
@@ -35,7 +35,7 @@ WT_CONFIG = $(WT_CONFIG_INSTALL)
 EXE_PATH = $(bindir)/$(QMAKE_TARGET)
 APPROOT = $(localstatedir)/lib/facts
 STARTER = $(bindir)/facts
-FCGI_RUN_DIR = $(FCGI_RUN_DIR_INSTALL)
+FCGI_RUN_DIR = $(VAR_RUN)
 else
 WT_CONFIG = $(BUILD)/wt_config_$(MODE).xml
 EXE_PATH = $(EXE)
@@ -73,10 +73,8 @@ install: $$(EXE) images $$(WT_CONFIG)
 	echo '#!/bin/sh' > $(STARTER)
 	echo '$(RUN_COMMAND)' > $(STARTER)
 	chmod +x $(STARTER)
-ifeq ($(MODE), fcgi)
-	mkdir -p $(FCGI_RUN_DIR_INSTALL)
-	chown $(RUN_USER):$(RUN_GROUP) $(FCGI_RUN_DIR_INSTALL)
-endif
+	mkdir -p $(VAR_RUN)
+	chown $(RUN_USER):$(RUN_GROUP) $(VAR_RUN)
 ifneq (,$(findstring nginx,$(INTEGRATE_INTO)))
 	cp --backup nginx.in $(NGINX_CONF)
 	sed 's@SERVER_NAME@$(SERVER_NAME)@' -i $(NGINX_CONF)
@@ -111,15 +109,15 @@ install-ubuntu:
 uninstall-ubuntu:
 	$(MAKE) uninstall prefix=/usr sysconfdir=/etc localstatedir=/var
 
-wt_config.xml:
-	cp /etc/wt/wt_config.xml .
+wt_config.xml: /etc/wt/wt_config.xml
+	cp $< $@
 
 $(WT_CONFIG): wt_config.xml
 	mkdir -p $(dir $@)
 	cp --backup $< $@
 ifeq ($(MODE), fcgi)
 	mkdir -p $(FCGI_RUN_DIR)
-	sed 's@$(FCGI_RUN_DIR_INSTALL)@$(FCGI_RUN_DIR)@' -i $@
+	sed 's@$(FCGI_RUN_DIR_ORIGINAL)@$(FCGI_RUN_DIR)@' -i $@
 	sed 's@<num-threads>1</num-threads>@<num-threads>2</num-threads>@' -i $@
 endif
 	sed 's@</properties>@<property name="approot">$(APPROOT)</property></properties>@' -i $@
