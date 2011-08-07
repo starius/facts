@@ -98,8 +98,7 @@ wt_config.xml:
 	cp /etc/wt/wt_config.xml .
 
 $(WT_CONFIG): wt_config.xml
-	mkdir -p $@
-	rmdir $@
+	mkdir -p $(dir $@)
 	cp --backup $< $@
 ifeq ($(MODE), fcgi)
 	mkdir -p $(FCGI_RUN_DIR)
