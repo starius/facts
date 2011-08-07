@@ -2,7 +2,7 @@
 BUILD = debug
 MODE = http
 PORT = 5711
-ADDRESS = 0.0.0.0
+ADDRESS = 127.0.0.1
 RUN_USER = www-data
 RUN_GROUP = www-data
 
