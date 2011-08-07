@@ -103,6 +103,7 @@ $(WT_CONFIG): wt_config.xml
 ifeq ($(MODE), fcgi)
 	mkdir -p $(FCGI_RUN_DIR)
 	sed 's@$(FCGI_RUN_DIR_INSTALL)@$(FCGI_RUN_DIR)@' -i $@
+	sed 's@<num-threads>1</num-threads>@<num-threads>2</num-threads>@' -i $@
 endif
 	sed 's@</properties>@<property name="approot">$(APPROOT)</property></properties>@' -i $@
 
