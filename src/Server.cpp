@@ -10,6 +10,8 @@
 #include <boost/bind.hpp>
 
 #include <Wt/WEnvironment>
+#include <Wt/Dbo/backend/Sqlite3>
+namespace dbo = Wt::Dbo;
 
 #include "model/Fact.hpp"
 #include "Session.hpp"
@@ -23,11 +25,15 @@ Wt::WApplication* createApplication(Server* server, const Wt::WEnvironment& env)
 }
 
 Server::Server(int argc, char **argv):
-    pool_(Session::new_connection(), CONNECTIONS_IN_POOL) {
-    setServerConfiguration(argc, argv);
+    // config should be set before running new_connection_() since it needs approot
+    pool_((setServerConfiguration(argc, argv), new_connection_()), CONNECTIONS_IN_POOL) {
     addEntryPoint(Wt::Application, boost::bind(createApplication, this, _1), "", "/favicon.ico");
     Session s(*this);
     s.reconsider();
+}
+
+dbo::SqlConnection* Server::new_connection_() {
+    return new dbo::backend::Sqlite3(appRoot() + SQLITE_DATABASE_NAME);
 }
 
 }

@@ -29,6 +29,8 @@ public:
 
 private:
     dbo::FixedSqlConnectionPool pool_;
+
+    dbo::SqlConnection* new_connection_();
 };
 
 }

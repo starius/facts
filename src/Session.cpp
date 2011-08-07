@@ -10,12 +10,10 @@
 #include <boost/tuple/tuple.hpp>
 #include <boost/foreach.hpp>
 
-#include <Wt/Dbo/backend/Sqlite3>
 #include <Wt/Dbo/Transaction>
 
 #include "model/Fact.hpp"
 #include "Session.hpp"
-#include "config.hpp"
 
 namespace facts {
 
@@ -59,10 +57,6 @@ void Session::reconsider_scores_() {
         fact.modify()->score_ = score;
     }
     t.commit();
-}
-
-dbo::SqlConnection* Session::new_connection() {
-    return new dbo::backend::Sqlite3(SQLITE_DATABASE_NAME);
 }
 
 }
