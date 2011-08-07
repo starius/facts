@@ -9,6 +9,7 @@ INTEGRATE_INTO = nginx,monit
 NGINX_PREFIX =
 SERVER_NAME = facts
 NGINX_CONF = /etc/nginx/sites-available/facts
+MONIT_CONF = /etc/monit/conf.d/facts
 
 prefix = /usr/local
 exec_prefix = $(prefix)
@@ -22,6 +23,7 @@ FCGI_RUN_DIR_ORIGINAL = /var/run/wt # as specified in /etc/wt/wt_config.xml
 FCGI_RUN_DIR_INSTALL = $(localstatedir)/run/wt
 WT_CONFIG_INSTALL = $(sysconfdir)/facts/wt_config.xml
 NGINX_CONF2 = $(subst available,enabled,$(NGINX_CONF))
+PID_FILE = $(localstatedir)/run/facts.pid
 
 .SECONDEXPANSION:
 
@@ -45,9 +47,9 @@ DOCROOT = $(DOCROOT_PARENT)/files
 
 ifeq ($(MODE), http)
 RUN_COMMAND = WT_CONFIG_XML=$(WT_CONFIG) $(EXE_PATH) --http-address=$(ADDRESS) --http-port=$(PORT) \
-			  --docroot="$(DOCROOT)/;/resources,/img,/js,/css,/tinymce,/favicon.ico"
+			  --docroot="$(DOCROOT)/;/resources,/img,/js,/css,/tinymce,/favicon.ico" -p $(PID_FILE)
 else
-RUN_COMMAND = WT_CONFIG_XML=$(WT_CONFIG) spawn-fcgi -n -f $(EXE_PATH) -a $(ADDRESS) -p $(PORT)
+RUN_COMMAND = WT_CONFIG_XML=$(WT_CONFIG) spawn-fcgi -n -f $(EXE_PATH) -a $(ADDRESS) -p $(PORT) -P $(PID_FILE)
 endif
 
 build: $$(EXE)
@@ -88,6 +90,15 @@ ifeq ($(MODE), http)
 	sed 's@$(ADDRESS):$(PORT)@http://$(ADDRESS):$(PORT)@' -i $(NGINX_CONF)
 endif
 	if [ ! -f $(NGINX_CONF2) ]; then ln -s $(NGINX_CONF) $(NGINX_CONF2); fi
+endif
+ifneq (,$(findstring monit,$(INTEGRATE_INTO)))
+	cp --backup monit.in $(MONIT_CONF)
+	sed 's@PID_FILE@$(PID_FILE)@' -i $(MONIT_CONF)
+	sed 's@EXE_PATH@$(EXE_PATH)@' -i $(MONIT_CONF)
+	sed 's@RUN_USER@$(RUN_USER)@' -i $(MONIT_CONF)
+	sed 's@RUN_GROUP@$(RUN_GROUP)@' -i $(MONIT_CONF)
+	sed 's@ADDRESS@$(ADDRESS)@' -i $(MONIT_CONF)
+	sed 's@PORT@$(PORT)@' -i $(MONIT_CONF)
 endif
 
 uninstall:

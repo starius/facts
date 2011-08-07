@@ -1,0 +1,7 @@
+check process facts with pidfile PID_FILE
+    start program = "EXE_PATH"
+        as uid RUN_USER and gid RUN_GROUP
+    stop program = "/bin/kill `cat PID_FILE`"
+        as uid RUN_USER and gid RUN_GROUP
+    if failed host ADDRESS port PORT type tcp then restart
+
