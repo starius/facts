@@ -9,17 +9,23 @@ Other versions of the GPL do not apply.
 Runtime-requirements:
  * Wt 3.1.10+: http://www.webtoolkit.eu/wt/doc/reference/html/InstallationUnix.html
    at least libwt, libwthttp, libwtsqlite3
+ * boost: signals, thread, random, system, regex
+ * crypt (for -lcrypt)
+ * lighttpd (for spawn-fcgi when run in fcgi mode)
 
 Build-requirements:
  * g++ 4.5+ (lto is used in release version)
+ * gnu make
  * qmake
- * inkskape (Font Steve is used for logo and favicon)
+ * inkscape (Font Steve is used for logo and favicon)
  * convert by ImageMagick
  * upx (is used to compress release version)
 
-To compile run `make`. The default target of make is building of debug
-version of program. To build release version, run `make release`.
-
-To run the program:
-    make run-debug
+Build and run:
+ * run `make` to build the executable
+ * run `make run` to run the server
+Variables of Makefile:
+ * BUILD (=debug), build type: debug | release
+ * MODE (=http), wt connector: http | fcgi
+ * PORT (=5711), ADDRESS (=0.0.0.0): port and address of http or fcgi server
 

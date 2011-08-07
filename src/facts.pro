@@ -1,7 +1,5 @@
 CONFIG -= qt
 
-TARGET = facts.wt
-
 SOURCES = $$system("find -name '*.cpp'")
 HEADERS = $$system("find -name '*.hpp'")
 
@@ -20,6 +18,6 @@ QMAKE_CXX = ccache g++
 
 LIBS += -lcrypt -lpthread
 LIBS += -lboost_signals -lboost_regex -lboost_system -lboost_thread
-LIBS += -lwt -lwthttp
+LIBS += -lwt
 LIBS += -lwtdbo -lwtdbosqlite3 -lwtdbopostgres
 
