@@ -85,7 +85,7 @@ ifneq (,$(findstring nginx,$(INTEGRATE_INTO)))
 ifeq ($(MODE), http)
 	sed 's@fastcgi_pass@proxy_pass@' -i $(NGINX_CONF)
 	sed 's@include fastcgi_params;@@' -i $(NGINX_CONF)
-	sed 's@$(ADDRESS):$(PORT)@http://$(ADDRESS):$(PORT)@' -i $(NGINX_CONF)
+	sed 's@$(ADDRESS):$(PORT)@http://$(ADDRESS):$(PORT)/@' -i $(NGINX_CONF)
 endif
 	if [ ! -f $(NGINX_CONF2) ]; then ln -s $(NGINX_CONF) $(NGINX_CONF2); fi
 endif
