@@ -6,11 +6,11 @@ server {
 	access_log	/var/log/nginx/facts.access.log;
 
 	location ~ /NGINX_PREFIX(img|fav|res|css).* {
-		root DOCROOT_PARENT;
+		root DOCROOT;
 	}
 
 	location /NGINX_PREFIX {
-		fastcgi_pass   127.0.0.1:PORT;
+		fastcgi_pass   ADDRESS:PORT;
 		include fastcgi_params;
 	}
 

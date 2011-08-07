@@ -79,8 +79,14 @@ ifneq (,$(findstring nginx,$(INTEGRATE_INTO)))
 	cp --backup nginx.in $(NGINX_CONF)
 	sed 's@SERVER_NAME@$(SERVER_NAME)@' -i $(NGINX_CONF)
 	sed 's@NGINX_PREFIX@$(NGINX_PREFIX)@' -i $(NGINX_CONF)
-	sed 's@DOCROOT_PARENT@$(DOCROOT_PARENT)@' -i $(NGINX_CONF)
+	sed 's@DOCROOT@$(DOCROOT)@' -i $(NGINX_CONF)
 	sed 's@PORT@$(PORT)@' -i $(NGINX_CONF)
+	sed 's@ADDRESS@$(ADDRESS)@' -i $(NGINX_CONF)
+ifeq ($(MODE), http)
+	sed 's@fastcgi_pass@proxy_pass@' -i $(NGINX_CONF)
+	sed 's@include fastcgi_params;@@' -i $(NGINX_CONF)
+	sed 's@$(ADDRESS):$(PORT)@http://$(ADDRESS):$(PORT)@' -i $(NGINX_CONF)
+endif
 	if [ ! -f $(NGINX_CONF2) ]; then ln -s $(NGINX_CONF) $(NGINX_CONF2); fi
 endif
 
