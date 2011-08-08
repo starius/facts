@@ -13,7 +13,7 @@
 #include <Wt/WContainerWidget>
 
 namespace facts {
-class FactListModel;
+class FactListView;
 
 /** Widget to make admin changes of site.
 Does not check admin permissions of user! Creator of this widget should check
@@ -23,7 +23,7 @@ public:
     AdminWidget(Wt::WContainerWidget* p=0);
 
 private:
-    FactListModel* model_;
+    FactListView* view_;
 
     void save_handler_();
     void add_handler_();

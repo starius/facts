@@ -74,22 +74,24 @@ AdminWidget::AdminWidget(Wt::WContainerWidget* p):
     Wt::WPushButton* add = new Wt::WPushButton(tr("facts.admin.Add"), this);
     add->clicked().connect(this, &AdminWidget::add_handler_);
     Q query = fApp->session().find<Fact>();
-    model_ = new FactListModel(query, this);
-    new FactListView(model_, this);
+    FactListModel* model = new FactListModel(query, this);
+    view_ = new FactListView(model, this);
     t.commit();
 }
 
 void AdminWidget::save_handler_() {
+    view_->closeEditors();
     dbo::Transaction t(fApp->session());
     fApp->session().flush();
     t.commit();
 }
 
 void AdminWidget::add_handler_() {
+    view_->closeEditors();
     dbo::Transaction t(fApp->session());
     fApp->session().add(new Fact(true));
     fApp->session().flush();
-    model_->reload();
+    static_cast<FactListModel*>(view_->model())->reload();
     t.commit();
 }
 
