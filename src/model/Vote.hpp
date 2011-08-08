@@ -102,7 +102,7 @@ public:
     template<class Action>
     void persist(Action& a) {
         dbo::id(a, vote_id_, "id");
-        dbo::field(a, when_added_, "when_added");
+        dbo::field(a, when_added_, "when_added", 50);
         dbo::field(a, diff_, "diff");
     }
 

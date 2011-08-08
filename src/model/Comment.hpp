@@ -23,6 +23,19 @@ typedef dbo::ptr<Comment> CommentPtr;
 typedef dbo::collection<CommentPtr> Comments;
 }
 
+namespace Wt {
+namespace Dbo {
+
+template<>
+struct dbo_traits<facts::Comment> : public dbo_default_traits {
+    static const char *versionField() {
+        return 0;
+    }
+};
+
+}
+}
+
 #include "model/Fact.hpp"
 
 namespace facts {
@@ -85,10 +98,10 @@ public:
     template<class Action>
     void persist(Action& a) {
         dbo::belongsTo(a, fact_, "fact", dbo::OnDeleteCascade);
-        dbo::field(a, username_, "username");
-        dbo::field(a, email_, "email");
+        dbo::field(a, username_, "username", 100);
+        dbo::field(a, email_, "email", 50);
         dbo::field(a, text_, "text");
-        dbo::field(a, when_added_, "when_added");
+        dbo::field(a, when_added_, "when_added", 50);
     }
 
     friend class Session;

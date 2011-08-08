@@ -21,6 +21,19 @@ class Fact;
 typedef dbo::ptr<Fact> FactPtr;
 }
 
+namespace Wt {
+namespace Dbo {
+
+template<>
+struct dbo_traits<facts::Fact> : public dbo_default_traits {
+    static const char *versionField() {
+        return 0;
+    }
+};
+
+}
+}
+
 #include "model/Vote.hpp"
 #include "model/Comment.hpp"
 
@@ -60,7 +73,7 @@ public:
     template<class Action>
     void persist(Action& a) {
         dbo::field(a, text_, "text");
-        dbo::field(a, when_added_, "when_added");
+        dbo::field(a, when_added_, "when_added", 50);
         dbo::field(a, score_, "score");
         dbo::hasMany(a, votes_, dbo::ManyToOne, "fact");
         dbo::hasMany(a, comments_, dbo::ManyToOne, "fact");
