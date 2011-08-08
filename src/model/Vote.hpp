@@ -30,7 +30,7 @@ public:
     /** Create a new vote to be added to database.
     This method modifies the fact, changing it's score.
     */
-    Vote(FactPtr fact, const std::string& ip, short diff);
+    Vote(const VoteId& id, short diff);
 
     /** Get the datetime of creation of the vote */
     const Wt::WDateTime& when_added() const {
@@ -44,14 +44,14 @@ public:
 
     template<class Action>
     void persist(Action& a) {
-        dbo::id(a, vote_id_, "id");
+        dbo::id(a, id_, "id");
         dbo::field(a, when_added_, "when_added", 50);
         dbo::field(a, diff_, "diff");
     }
 
     friend class Session;
 private:
-    VoteId vote_id_;
+    VoteId id_;
     Wt::WDateTime when_added_;
     short diff_;
 };

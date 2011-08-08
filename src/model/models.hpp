@@ -60,6 +60,13 @@ struct dbo_traits<facts::Fact> : public dbo_default_traits {
 namespace facts {
 
 struct VoteId {
+    VoteId()
+    { }
+
+    VoteId(FactPtr f, const std::string& i):
+        fact(f), ip(i)
+    { }
+
     FactPtr fact;
     std::string ip;
 
@@ -115,6 +122,13 @@ struct dbo_traits<facts::Vote> : public dbo_default_traits {
 namespace facts {
 
 struct CommentId {
+    CommentId()
+    { }
+
+    CommentId(FactPtr f, int i):
+        fact(f), index(i)
+    { }
+
     FactPtr fact;
     int index;
 

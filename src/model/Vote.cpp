@@ -14,12 +14,11 @@ namespace facts {
 Vote::Vote() {
 }
 
-Vote::Vote(FactPtr fact, const std::string& ip, short diff):
+Vote::Vote(const VoteId& id, short diff):
+    id_(id),
     when_added_(Wt::WDateTime::currentDateTime()),
     diff_(diff) {
-    vote_id_.fact = fact;
-    vote_id_.ip = ip;
-    fact.modify()->score_ += diff;
+    id_.fact.modify()->score_ += diff;
 }
 
 std::ostream& operator<< (std::ostream& o, const VoteId& vi) {

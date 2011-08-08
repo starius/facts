@@ -52,15 +52,12 @@ void FactWidget::set_score_() {
 void FactWidget::vote_(short diff) {
     dbo::Transaction t(fApp->session());
     fact_.reread();
-    VoteId vote_id;
-    vote_id.fact = fact_;
-    vote_id.ip = fApp->environment().clientAddress();
+    VoteId vote_id(fact_, fApp->environment().clientAddress());
     try {
         fApp->session().load<Vote>(vote_id);
         score_->setText(tr("facts.fact.Already_voted"));
     } catch (dbo::ObjectNotFoundException) {
-        Vote* vote = new Vote(fact_, vote_id.ip, diff);
-        fApp->session().add(vote);
+        fApp->session().add(new Vote(vote_id, diff));
         set_score_();
     }
     t.commit();
