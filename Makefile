@@ -19,7 +19,7 @@ sysconfdir = $(prefix)/etc
 localstatedir = $(prefix)/var
 bindir = $(exec_prefix)/bin
 
-FCGI_RUN_DIR_ORIGINAL = /var/run/wt # as specified in /etc/wt/wt_config.xml
+FCGI_RUN_DIR_ORIGINAL = /var/run/wt# as specified in /etc/wt/wt_config.xml
 VAR_RUN = $(localstatedir)/run/facts
 WT_CONFIG_INSTALL = $(sysconfdir)/facts/wt_config.xml
 NGINX_CONF2 = $(subst available,enabled,$(NGINX_CONF))
