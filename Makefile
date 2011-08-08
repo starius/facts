@@ -71,7 +71,7 @@ install: $$(EXE) images $$(WT_CONFIG)
 	if [ ! -d $(APPROOT)/locales ]; then ln -s $(DOCROOT_PARENT)/locales $(APPROOT); fi
 	chown -R $(RUN_USER):$(RUN_GROUP) $(APPROOT) $(DOCROOT_PARENT)
 	echo '#!/bin/sh' > $(STARTER)
-	echo '$(RUN_COMMAND)' > $(STARTER)
+	echo '$(RUN_COMMAND)' >> $(STARTER)
 	chmod +x $(STARTER)
 	mkdir -p $(VAR_RUN)
 	chown $(RUN_USER):$(RUN_GROUP) $(VAR_RUN)
