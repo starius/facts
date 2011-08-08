@@ -86,7 +86,7 @@ ifneq (,$(findstring nginx,$(INTEGRATE_INTO)))
 	sed 's@ADDRESS@$(ADDRESS)@' -i $(NGINX_CONF)
 ifeq ($(MODE), http)
 	sed 's@fastcgi_pass@proxy_pass@' -i $(NGINX_CONF)
-	sed 's@include fastcgi_params;@@' -i $(NGINX_CONF)
+	sed 's@include fastcgi_params;@proxy_set_header X-Forwarded-Host $$server_name;@' -i $(NGINX_CONF)
 	sed 's@$(ADDRESS):$(PORT)@http://$(ADDRESS):$(PORT)/@' -i $(NGINX_CONF)
 endif
 	if [ ! -f $(NGINX_CONF2) ]; then ln -s $(NGINX_CONF) $(NGINX_CONF2); fi
@@ -122,6 +122,7 @@ ifeq ($(MODE), fcgi)
 	sed 's@$(FCGI_RUN_DIR_ORIGINAL)@$(FCGI_RUN_DIR)@' -i $@
 	sed 's@<num-threads>1</num-threads>@<num-threads>2</num-threads>@' -i $@
 endif
+	sed 's@<behind-reverse-proxy>false</behind-reverse-proxy>@<behind-reverse-proxy>true</behind-reverse-proxy>@' -i $@
 	sed 's@</properties>@<property name="approot">$(APPROOT)</property></properties>@' -i $@
 
 images: files/favicon.ico files/img/logo.png files/img/update.png \
