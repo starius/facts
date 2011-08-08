@@ -39,10 +39,21 @@ public:
     /** Genarate internel path for the fact */
     std::string fact_path(FactPtr fact) const;
 
+    /** Return if the user has admin permissions */
+    bool admin() const {
+        return admin_;
+    }
+
+    /** Set admin permissions */
+    void set_admin(bool v=true) {
+        admin_ = v;
+    }
+
 private:
     Session session_;
     mutable boost::format fact_path_format_;
     FactsWidget* facts_;
+    bool admin_;
 
     void path_changed_handler_();
 };

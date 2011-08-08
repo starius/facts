@@ -18,7 +18,8 @@ namespace facts {
 
 Application::Application(const Wt::WEnvironment& env, Server& server):
     Wt::WApplication(env), session_(server),
-    fact_path_format_("/fact/%i/") {
+    fact_path_format_("/fact/%i/"),
+    admin_(false) {
     messageResourceBundle().use(Wt::WApplication::appRoot() +
                                 "locales/facts");
     setCssTheme("polished");

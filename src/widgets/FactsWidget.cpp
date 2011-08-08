@@ -63,20 +63,25 @@ void FactsWidget::setWidget(Wt::WWidget* widget, Wt::WBorderLayout::Position pos
 }
 
 void FactsWidget::enter_admin_handler_() {
-    Wt::WContainerWidget* p = new Wt::WContainerWidget();
-    admin_password_ = new Wt::WLineEdit(p);
-    admin_password_->setEchoMode(Wt::WLineEdit::Password);
-    admin_password_->setEmptyText(tr("facts.admin.Enter_admin_password"));
-    admin_password_->enterPressed().connect(this, &FactsWidget::enter_handler_);
-    if (!fApp->environment().ajax()) {
-        Wt::WPushButton* enter = new Wt::WPushButton(tr("facts.admin.Enter_admin"), p);
-        enter->clicked().connect(this, &FactsWidget::enter_handler_);
+    if (fApp->admin()) {
+        setWidget(new AdminWidget());
+    } else {
+        Wt::WContainerWidget* p = new Wt::WContainerWidget();
+        admin_password_ = new Wt::WLineEdit(p);
+        admin_password_->setEchoMode(Wt::WLineEdit::Password);
+        admin_password_->setEmptyText(tr("facts.admin.Enter_admin_password"));
+        admin_password_->enterPressed().connect(this, &FactsWidget::enter_handler_);
+        if (!fApp->environment().ajax()) {
+            Wt::WPushButton* enter = new Wt::WPushButton(tr("facts.admin.Enter_admin"), p);
+            enter->clicked().connect(this, &FactsWidget::enter_handler_);
+        }
+        setWidget(p);
     }
-    setWidget(p);
 }
 
 void FactsWidget::enter_handler_() {
     if (admin_password_->text() == ADMIN_PASSWORD) {
+        fApp->set_admin();
         setWidget(new AdminWidget());
     } else {
         setWidget(new Wt::WText(tr("facts.admin.Wrong_admin_password")));
