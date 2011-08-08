@@ -11,68 +11,11 @@
 #define FACTS_MODEL_VOTE_HPP_
 
 #include <Wt/Dbo/Dbo>
-#include <Wt/Dbo/WtSqlTraits>
-#include <Wt/Dbo/ptr>
 #include <Wt/WDateTime>
 namespace dbo = Wt::Dbo;
 
-namespace facts {
-class Vote;
-typedef dbo::ptr<Vote> VotePtr;
-typedef dbo::collection<VotePtr> Votes;
-}
-
+#include "model/models.hpp"
 #include "model/Fact.hpp"
-
-namespace facts {
-
-struct VoteId {
-    FactPtr fact;
-    std::string ip;
-
-    bool operator== (const VoteId& other) const {
-        return fact==other.fact && ip==other.ip;
-    }
-
-    bool operator< (const VoteId& other) const {
-        return fact < other.fact || (fact == other.fact && ip < other.ip);
-    }
-};
-
-std::ostream& operator<< (std::ostream& o, const VoteId& vi);
-
-}
-
-namespace Wt {
-namespace Dbo {
-
-template <class Action>
-void field(Action& action, facts::VoteId& vote_id,
-           const std::string& /* name */ , int /* size */ = -1) {
-    belongsTo(action, vote_id.fact, "fact", OnDeleteCascade);
-    const int MAX_IP_LENGTH = 45;
-    field(action, vote_id.ip, "ip", MAX_IP_LENGTH);
-}
-
-template<>
-struct dbo_traits<facts::Vote> : public dbo_default_traits {
-    typedef facts::VoteId IdType;
-
-    static IdType invalidId() {
-        return IdType();
-    }
-
-    static const char *surrogateIdField() {
-        return 0;
-    }
-
-    static const char *versionField() {
-        return 0;
-    }
-};
-
-}
-}
 
 namespace facts {
 

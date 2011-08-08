@@ -11,31 +11,11 @@
 #define FACTS_MODEL_COMMENT_HPP_
 
 #include <Wt/Dbo/Dbo>
-#include <Wt/Dbo/WtSqlTraits>
-#include <Wt/Dbo/ptr>
 #include <Wt/WDateTime>
 #include <Wt/WString>
 namespace dbo = Wt::Dbo;
 
-namespace facts {
-class Comment;
-typedef dbo::ptr<Comment> CommentPtr;
-typedef dbo::collection<CommentPtr> Comments;
-}
-
-namespace Wt {
-namespace Dbo {
-
-template<>
-struct dbo_traits<facts::Comment> : public dbo_default_traits {
-    static const char *versionField() {
-        return 0;
-    }
-};
-
-}
-}
-
+#include "model/models.hpp"
 #include "model/Fact.hpp"
 
 namespace facts {
@@ -48,17 +28,7 @@ public:
 #endif
 
     /** Create a new comment to be added to database */
-    Comment(bool);
-
-    /** Get the fact of the comment */
-    FactPtr fact() const {
-        return fact_;
-    }
-
-    /** Set the fact of the comment */
-    void set_fact(FactPtr v) {
-        fact_ = v;
-    }
+    Comment(const CommentId& id);
 
     /** Get the username of commenter */
     const Wt::WString& username() const {
@@ -97,7 +67,7 @@ public:
 
     template<class Action>
     void persist(Action& a) {
-        dbo::belongsTo(a, fact_, "fact", dbo::OnDeleteCascade);
+        dbo::id(a, id_, "id");
         dbo::field(a, username_, "username", 100);
         dbo::field(a, email_, "email", 50);
         dbo::field(a, text_, "text");
@@ -106,7 +76,7 @@ public:
 
     friend class Session;
 private:
-    FactPtr fact_;
+    CommentId id_;
     Wt::WString username_;
     std::string email_;
     Wt::WString text_;

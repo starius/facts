@@ -11,29 +11,10 @@
 #define FACTS_MODEL_FACT_HPP_
 
 #include <Wt/Dbo/Dbo>
-#include <Wt/Dbo/WtSqlTraits>
-#include <Wt/Dbo/ptr>
 #include <Wt/WDateTime>
 namespace dbo = Wt::Dbo;
 
-namespace facts {
-class Fact;
-typedef dbo::ptr<Fact> FactPtr;
-}
-
-namespace Wt {
-namespace Dbo {
-
-template<>
-struct dbo_traits<facts::Fact> : public dbo_default_traits {
-    static const char *versionField() {
-        return 0;
-    }
-};
-
-}
-}
-
+#include "model/models.hpp"
 #include "model/Vote.hpp"
 #include "model/Comment.hpp"
 
