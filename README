@@ -14,6 +14,7 @@ Runtime-requirements:
  * lighttpd (for spawn-fcgi when run in fcgi mode)
 
 Build-requirements:
+ * ccache
  * g++ 4.5+ (lto is used in release version)
  * gnu make
  * qmake
