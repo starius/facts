@@ -15,10 +15,8 @@
 #include <Wt/Dbo/SqlConnection>
 namespace dbo = Wt::Dbo;
 
-#include "model/Fact.hpp"
-#include "Server.hpp"
-
 namespace facts {
+class Server;
 
 /** Descendant of dbo::Session.
 */

@@ -13,6 +13,7 @@
 #include <Wt/Dbo/backend/Sqlite3>
 namespace dbo = Wt::Dbo;
 
+#include "Server.hpp"
 #include "model/Fact.hpp"
 #include "Session.hpp"
 #include "Application.hpp"
