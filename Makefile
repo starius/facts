@@ -70,6 +70,7 @@ install: $$(EXE) images $$(WT_CONFIG)
 	cp -ra files locales $(DOCROOT_PARENT)
 	if [ ! -d $(APPROOT)/locales ]; then ln -s $(DOCROOT_PARENT)/locales $(APPROOT); fi
 	chown -R $(RUN_USER):$(RUN_GROUP) $(APPROOT) $(DOCROOT_PARENT)
+	chmod 770 $(APPROOT)
 	echo '#!/bin/sh' > $(STARTER)
 	echo '$(RUN_COMMAND)' >> $(STARTER)
 	chmod +x $(STARTER)
