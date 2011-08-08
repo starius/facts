@@ -7,7 +7,7 @@ RUN_USER = www-data
 RUN_GROUP = www-data
 INTEGRATE_INTO = # nginx,monit
 NGINX_PREFIX =
-SERVER_NAME = facts
+HOST_NAME = facts
 NGINX_CONF = /etc/nginx/sites-available/facts
 MONIT_CONF = /etc/monit/conf.d/facts
 
@@ -79,7 +79,7 @@ install: $$(EXE) images $$(WT_CONFIG)
 	chmod 770 $(VAR_RUN)
 ifneq (,$(findstring nginx,$(INTEGRATE_INTO)))
 	cp --backup nginx.in $(NGINX_CONF)
-	sed 's@SERVER_NAME@$(SERVER_NAME)@' -i $(NGINX_CONF)
+	sed 's@HOST_NAME@$(HOST_NAME)@' -i $(NGINX_CONF)
 	sed 's@NGINX_PREFIX@$(NGINX_PREFIX)@' -i $(NGINX_CONF)
 	sed 's@DOCROOT@$(DOCROOT)@' -i $(NGINX_CONF)
 	sed 's@PORT@$(PORT)@' -i $(NGINX_CONF)
