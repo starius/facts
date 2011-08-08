@@ -23,7 +23,6 @@ FCGI_RUN_DIR_ORIGINAL = /var/run/wt# as specified in /etc/wt/wt_config.xml
 VAR_RUN = $(localstatedir)/run/facts
 WT_CONFIG_INSTALL = $(sysconfdir)/facts/wt_config.xml
 NGINX_CONF2 = $(subst available,enabled,$(NGINX_CONF))
-PID_FILE = $(VAR_RUN)/facts.pid
 
 .SECONDEXPANSION:
 
@@ -34,15 +33,18 @@ BUILD = release
 WT_CONFIG = $(WT_CONFIG_INSTALL)
 EXE_PATH = $(bindir)/$(QMAKE_TARGET)
 APPROOT = $(localstatedir)/lib/facts
+DOCROOT_PARENT = $(datadir)/facts
 STARTER = $(bindir)/facts
 FCGI_RUN_DIR = $(VAR_RUN)
+PID_FILE = $(VAR_RUN)/facts.pid
 else
 WT_CONFIG = $(BUILD)/wt_config_$(MODE).xml
 EXE_PATH = $(EXE)
 APPROOT = .
+DOCROOT_PARENT = .
 FCGI_RUN_DIR = $(BUILD)/run
+PID_FILE = $(BUILD)/facts-$(MODE).pid
 endif
-DOCROOT_PARENT = $(datadir)/facts
 DOCROOT = $(DOCROOT_PARENT)/files
 
 ifeq ($(MODE), http)
