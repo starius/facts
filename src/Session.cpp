@@ -14,6 +14,7 @@
 
 #include "model/Fact.hpp"
 #include "model/Vote.hpp"
+#include "model/Comment.hpp"
 #include "Session.hpp"
 #include "Server.hpp"
 
@@ -23,6 +24,7 @@ Session::Session(Server& server) {
     setConnectionPool(server.pool());
     mapClass<Fact>("facts_fact");
     mapClass<Vote>("facts_vote");
+    mapClass<Comment>("facts_comment");
 }
 
 void Session::reconsider() {

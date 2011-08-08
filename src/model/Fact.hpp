@@ -22,6 +22,7 @@ typedef dbo::ptr<Fact> FactPtr;
 }
 
 #include "model/Vote.hpp"
+#include "model/Comment.hpp"
 
 namespace facts {
 
@@ -62,6 +63,7 @@ public:
         dbo::field(a, when_added_, "when_added");
         dbo::field(a, score_, "score");
         dbo::hasMany(a, votes_, dbo::ManyToOne, "fact");
+        dbo::hasMany(a, comments_, dbo::ManyToOne, "fact");
     }
 
     friend class Session;
@@ -72,6 +74,7 @@ private:
     int score_;
 
     Votes votes_;
+    Comments comments_;
 };
 
 }
