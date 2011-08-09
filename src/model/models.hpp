@@ -111,6 +111,9 @@ struct dbo_traits<facts::Vote> : public dbo_default_traits {
     }
 };
 
+template<>
+void id(FromAnyAction&, facts::VoteId&, const std::string&, int);
+
 }
 }
 
@@ -171,6 +174,9 @@ struct dbo_traits<facts::Comment> : public dbo_default_traits {
         return 0;
     }
 };
+
+template<>
+void id(FromAnyAction&, facts::CommentId&, const std::string&, int);
 
 }
 }

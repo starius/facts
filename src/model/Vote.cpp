@@ -28,3 +28,14 @@ std::ostream& operator<< (std::ostream& o, const VoteId& vi) {
 
 }
 
+namespace Wt {
+namespace Dbo {
+
+template<>
+void id(FromAnyAction&, facts::CommentId&, const std::string&, int) {
+    throw std::logic_error("Can't set CommentId from any");
+}
+
+}
+}
+
