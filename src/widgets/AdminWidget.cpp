@@ -24,9 +24,9 @@ typedef FactPtr Result;
 typedef dbo::Query<Result> Q;
 typedef dbo::QueryModel<Result> BaseQM;
 
-const int n_column = 0;
-const int text_column = 1;
-const int when_added_column = 2;
+const int N_COLUMN = 0;
+const int TEXT_COLUMN = 1;
+const int WHEN_ADDED_COLUMN = 2;
 
 class FactListModel : public BaseQM {
 public:
@@ -41,7 +41,7 @@ public:
     boost::any data(const Wt::WModelIndex& index,
                     int role=Wt::DisplayRole) const {
         dbo::Transaction t(fApp->session());
-        if (role == Wt::InternalPathRole && index.column() == n_column) {
+        if (role == Wt::InternalPathRole && index.column() == N_COLUMN) {
             const FactPtr& o = resultRow(index.row());
             return fApp->fact_path(o);
         }
@@ -59,9 +59,9 @@ public:
         Wt::WTableView(p) {
         setModel(model);
         resize(770, 450);
-        setColumnWidth(n_column, 40);
-        setColumnWidth(text_column, 570);
-        setColumnWidth(when_added_column, 75);
+        setColumnWidth(N_COLUMN, 40);
+        setColumnWidth(TEXT_COLUMN, 570);
+        setColumnWidth(WHEN_ADDED_COLUMN, 75);
         setRowHeaderCount(1);
         setAlternatingRowColors(true);
     }
