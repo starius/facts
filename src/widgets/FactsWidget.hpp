@@ -45,6 +45,7 @@ private:
     void set_next_fact_();
     void id_clicked_handler_();
     void add_west_();
+    void show_admin_widget_();
 };
 
 }

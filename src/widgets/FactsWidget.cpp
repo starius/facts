@@ -66,7 +66,7 @@ void FactsWidget::setWidget(Wt::WWidget* widget, Wt::WBorderLayout::Position pos
 
 void FactsWidget::enter_admin_handler_() {
     if (fApp->admin()) {
-        setWidget(new AdminWidget());
+        show_admin_widget_();
     } else {
         Wt::WContainerWidget* p = new Wt::WContainerWidget();
         admin_password_ = new Wt::WLineEdit(p);
@@ -84,7 +84,7 @@ void FactsWidget::enter_admin_handler_() {
 void FactsWidget::enter_handler_() {
     if (admin_password_->text() == ADMIN_PASSWORD) {
         fApp->set_admin();
-        setWidget(new AdminWidget());
+        show_admin_widget_();
     } else {
         setWidget(new Wt::WText(tr("facts.admin.Wrong_admin_password")));
     }
@@ -164,6 +164,11 @@ void FactsWidget::add_west_() {
     next->clicked().connect(this, &FactsWidget::set_next_fact_);
     next->decorationStyle().setCursor(Wt::PointingHandCursor);
     next->setVerticalAlignment(Wt::AlignMiddle);
+}
+
+void FactsWidget::show_admin_widget_() {
+    setWidget(new AdminWidget());
+    fApp->setInternalPath(fApp->admin_path());
 }
 
 }

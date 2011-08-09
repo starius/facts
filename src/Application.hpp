@@ -42,6 +42,9 @@ public:
     /** Genarate internel path for the comment */
     std::string comment_path(const CommentPtr& fact) const;
 
+    /** Get internal path used for admin widget */
+    std::string admin_path() const;
+
     /** Return if the user has admin permissions */
     bool admin() const {
         return admin_;

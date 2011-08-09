@@ -43,6 +43,10 @@ std::string Application::comment_path(const CommentPtr& comment) const {
     return str(comment_path_format_ % comment.id().fact.id() % comment.id().index);
 }
 
+std::string Application::admin_path() const {
+    return "/admin/";
+}
+
 void Application::path_changed_handler_() {
     dbo::Transaction t(session());
     std::string section = internalPathNextPart("/");
