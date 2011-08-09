@@ -155,7 +155,7 @@ template <class Action>
 void field(Action& action, facts::CommentId& id,
            const std::string& /* name */ , int /* size */ = -1) {
     belongsTo(action, id.fact, "fact", OnDeleteCascade);
-    field(action, id.index, "index");
+    field(action, id.index, "comment_index");
 }
 
 template<>
