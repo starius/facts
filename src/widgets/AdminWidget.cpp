@@ -63,6 +63,7 @@ public:
         setColumnWidth(text_column, 570);
         setColumnWidth(when_added_column, 75);
         setRowHeaderCount(1);
+        setAlternatingRowColors(true);
     }
 };
 
