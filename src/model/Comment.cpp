@@ -31,7 +31,7 @@ namespace Dbo {
 
 template<>
 void id(FromAnyAction&, facts::VoteId&, const std::string&, int) {
-    throw std::logic_error("Can't set VoteId from any");
+    // FIXME
 }
 
 }

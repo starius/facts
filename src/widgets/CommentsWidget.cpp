@@ -29,8 +29,6 @@ typedef dbo::QueryModel<Result> BaseQM;
 
 const int INDEX_COLUMN = 0;
 const int TEXT_COLUMN = 1;
-const int USERNAME_COLUMN = 2;
-const int EMAIL_COLUMN = 3;
 
 const int INPUT_SIZE = 25;
 const int TEXT_COLUMNS = 80;
@@ -42,15 +40,7 @@ public:
         BaseQM(parent) {
         setQuery(query);
         addColumn("comment_index", "");
-        Wt::WFlags<Wt::ItemFlag> text_flags = Wt::ItemIsXHTMLText;
-        if (fApp->admin()) {
-            text_flags |= Wt::ItemIsEditable;
-        }
-        addColumn("text", "", text_flags);
-        if (fApp->admin()) {
-            addColumn("username", "", Wt::ItemIsEditable);
-            addColumn("email", "", Wt::ItemIsEditable);
-        }
+        addColumn("text", "", Wt::ItemIsXHTMLText);
     }
 
     boost::any data(const Wt::WModelIndex& index,
@@ -81,11 +71,7 @@ public:
         setSortingEnabled(false);
         resize(770, 450);
         setColumnWidth(INDEX_COLUMN, 40);
-        setColumnWidth(TEXT_COLUMN, 500);
-        if (fApp->admin()) {
-            setColumnWidth(USERNAME_COLUMN, 100);
-            setColumnWidth(EMAIL_COLUMN, 100);
-        }
+        setColumnWidth(TEXT_COLUMN, 700);
         setHeaderHeight(0);
         setRowHeight(ROW_HEIGHT);
         setColumnAlignment(INDEX_COLUMN, Wt::AlignRight | Wt::AlignTop);
