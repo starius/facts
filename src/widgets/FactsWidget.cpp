@@ -137,6 +137,7 @@ void FactsWidget::set_fact(const FactPtr& fact) {
     shown_fact_ = fact;
     setWidget(new FactWidget(fact));
     fApp->setTitle(fact->text());
+    fApp->setInternalPath(fApp->fact_path(fact));
     fact_id_->setText(boost::lexical_cast<std::string>(fact.id()));
     t.commit();
 }
