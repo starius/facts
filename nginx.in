@@ -5,11 +5,11 @@ server {
 	server_name  HOST_NAME;
 	access_log	/var/log/nginx/facts.access.log;
 
-	location ~ /NGINX_PREFIX((img|fav|res|css).*) {
+	location ~ /URL_PREFIX((img|fav|res|css).*) {
 		alias DOCROOT/$1;
 	}
 
-	location /NGINX_PREFIX {
+	location /URL_PREFIX {
 		fastcgi_pass   ADDRESS:PORT;
 		include fastcgi_params;
 	}
