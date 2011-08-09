@@ -163,7 +163,7 @@ struct dbo_traits<facts::Comment> : public dbo_default_traits {
     typedef facts::CommentId IdType;
 
     static IdType invalidId() {
-        return invalidId();
+        return IdType();
     }
 
     static const char *surrogateIdField() {
