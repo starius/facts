@@ -27,7 +27,8 @@
     </message>
     <message id='facts.comment.comments_template'>
         ${add}
-        <br /> ${comments}
+        <br /> <br />
+        ${comments}
     </message>
     <message id='facts.comment.format'>
         {1} {2} {3}

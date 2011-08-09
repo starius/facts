@@ -42,6 +42,8 @@ FactWidget::FactWidget(const FactPtr& fact, Wt::WContainerWidget* p):
     diff_plus->clicked().connect(boost::bind(&FactWidget::vote_, this, +1));
     diff_minus->decorationStyle().setCursor(Wt::PointingHandCursor);
     diff_plus->decorationStyle().setCursor(Wt::PointingHandCursor);
+    new Wt::WBreak(this);
+    new Wt::WBreak(this);
     new CommentsWidget(fact_, this);
     t.commit();
 }
