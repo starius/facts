@@ -51,6 +51,11 @@ public:
         return score_;
     }
 
+    /** Get the comments of the fact */
+    const Comments& comments() const {
+        return comments_;
+    }
+
     template<class Action>
     void persist(Action& a) {
         dbo::field(a, text_, "text");
