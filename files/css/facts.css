@@ -17,17 +17,27 @@ td {
     font: 16px 'Arial', Tahoma, Arial;
 }
 
-.Wt-tableview .Wt-plaintable td {
-    overflow-x: hidden !important;
+.Wt-tableview .Wt-tv-c {
+    overflow: hidden !important;
 }
 
 .Wt-itemview {
-    background: transparent; !important;
+    background: transparent !important;
     border: none;
 }
 
 .facts-text {
     font: 23px 'Arial', Tahoma, Arial;
     color: #9B9B9B;
+}
+
+.facts-commentsview .Wt-spacer {
+    background: transparent !important;
+}
+
+.facts-commentsview .Wt-tv-c {
+    line-height: 10px !important;
+    font: 9pt 'Arial', Tahoma, Arial !important;
+    white-space: normal;
 }
 

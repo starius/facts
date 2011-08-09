@@ -34,7 +34,7 @@ const int EMAIL_COLUMN = 3;
 
 const int INPUT_SIZE = 25;
 const int TEXT_COLUMNS = 80;
-const int ROW_HEIGHT = 40;
+const int ROW_HEIGHT = 140;
 
 class CommentsModel : public BaseQM {
 public:
@@ -88,7 +88,9 @@ public:
         }
         setHeaderHeight(0);
         setRowHeight(ROW_HEIGHT);
-        setAlternatingRowColors(true);
+        setColumnAlignment(INDEX_COLUMN, Wt::AlignRight | Wt::AlignTop);
+        setColumnAlignment(TEXT_COLUMN, Wt::AlignLeft | Wt::AlignTop);
+        addStyleClass("facts-commentsview");
     }
 };
 
