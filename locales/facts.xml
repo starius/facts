@@ -33,6 +33,7 @@
 
     <message id='facts.comment.Add'>Add comment</message>
     <message id='facts.comment.Email'>E-mail</message>
+    <message id='facts.comment.Incorrect'>Incorrect username, e-mail or text</message>
     <message id='facts.comment.Username'>User name</message>
     <message id='facts.comment.add_template'>
         ${username} ${email}
@@ -40,7 +41,7 @@
         <br /> ${button} ${error}
     </message>
     <message id='facts.comment.format'>
-        {1} ({2}), {3}
+        {1} {2} {3}
         {4}
     </message>
     <message id='facts.comment.comments_template'>

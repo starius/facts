@@ -12,9 +12,12 @@
 #include <Wt/Dbo/Transaction>
 #include <Wt/Dbo/Query>
 #include <Wt/Dbo/QueryModel>
+#include <Wt/WText>
 #include <Wt/WTextEdit>
 #include <Wt/WLineEdit>
 #include <Wt/WPushButton>
+#include <Wt/WLengthValidator>
+#include <Wt/WRegExpValidator>
 
 #include "widgets/CommentsWidget.hpp"
 #include "model/Fact.hpp"
@@ -33,6 +36,9 @@ const int TEXT_COLUMN = 1;
 const int INPUT_SIZE = 25;
 const int TEXT_COLUMNS = 80;
 const int ROW_HEIGHT = 140;
+const int MIN_INPUT_SIZE = 2;
+const Wt::WString EMAIL_PATTERN = "[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}";
+const int MAX_TEXT_SIZE = 2000;
 
 class CommentsModel : public BaseQM {
 public:
@@ -88,18 +94,24 @@ public:
         username_ = new Wt::WLineEdit();
         username_->setEmptyText(tr("facts.comment.Username"));
         username_->setTextSize(INPUT_SIZE);
+        username_->setValidator(new Wt::WLengthValidator(MIN_INPUT_SIZE, INPUT_SIZE));
+        username_->validator()->setMandatory(true);
         email_ = new Wt::WLineEdit();
         email_->setEmptyText(tr("facts.comment.Email"));
         email_->setTextSize(INPUT_SIZE);
+        email_->setValidator(new Wt::WRegExpValidator(EMAIL_PATTERN));
         text_ = new Wt::WTextEdit();
         text_->setColumns(TEXT_COLUMNS);
+        text_->setValidator(new Wt::WLengthValidator(MIN_INPUT_SIZE, MAX_TEXT_SIZE));
+        text_->validator()->setMandatory(true);
         Wt::WPushButton* add_button = new Wt::WPushButton(tr("facts.comment.Add"));
         add_button->clicked().connect(this, &CommentAddForm::add_handler_);
+        error_ = new Wt::WText();
         bindWidget("username", username_);
         bindWidget("email", email_);
         bindWidget("text", text_);
         bindWidget("button", add_button);
-        bindString("error", "");
+        bindWidget("error", error_);
     }
 
 private:
@@ -107,10 +119,15 @@ private:
     Wt::WLineEdit* username_;
     Wt::WLineEdit* email_;
     Wt::WTextEdit* text_;
+    Wt::WText* error_;
 
     void add_handler_() {
+        Wt::WValidator::State V = Wt::WValidator::Valid;
+        if (username_->validate() != V || email_->validate() != V || text_->validate() != V) {
+            error_->setText(tr("facts.comment.Incorrect"));
+            return;
+        }
         dbo::Transaction t(fApp->session());
-        // FIXME check!
         int index;
         if (comments_->fact()->comments().size()) {
             index = 1 + fApp->session()
