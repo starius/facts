@@ -137,9 +137,9 @@ void FactsWidget::id_clicked_handler_() {
 void FactsWidget::set_fact(const FactPtr& fact) {
     dbo::Transaction t(fApp->session());
     shown_fact_ = fact;
+    fApp->setInternalPath(fApp->fact_path(fact));
     setWidget(new FactWidget(fact));
     fApp->setTitle(fact->text());
-    fApp->setInternalPath(fApp->fact_path(fact));
     fact_id_->setText(boost::lexical_cast<std::string>(fact.id()));
     t.commit();
 }
@@ -167,8 +167,8 @@ void FactsWidget::add_west_() {
 }
 
 void FactsWidget::show_admin_widget_() {
-    setWidget(new AdminWidget());
     fApp->setInternalPath(fApp->admin_path());
+    setWidget(new AdminWidget());
 }
 
 }
