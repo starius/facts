@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<messages nplurals='2' plural="n==1 ? 0 : 1">
+
+<!--
+ facts, random fact viewer
+ Copyright (C) 2011 Boris Nagaev
+
+ thechess is licensed under the GNU GPL Version 2.
+ Other versions of the GPL do not apply.
+ See the LICENSE file for terms of use.
+-->
+
+    <message id='facts.admin.Add'>Добавить</message>
+    <message id='facts.admin.Enter_admin'>Войти на страницу администратора</message>
+    <message id='facts.admin.Enter_admin_password'>Введите пароль администратора</message>
+    <message id='facts.admin.Save'>Сохранить</message>
+    <message id='facts.admin.Wrong_admin_password'>Неверный пароль</message>
+
+    <message id='facts.comment.Add'>Добавить комментарий</message>
+    <message id='facts.comment.Email'>Адрес элекстронной почты</message>
+    <message id='facts.comment.Incorrect'>Неправильно введено имя пользователя, e-mail или текст</message>
+    <message id='facts.comment.Username'>Имя пользователя</message>
+
+    <message id='facts.common.id_format'>№{1}</message>
+
+    <message id='facts.fact.Already_voted'>Ваш IP адрес уже голосовал!</message>
+    <message id='facts.fact.forum'>[url={1}]Интересный факт[/url]</message>
+    <message id='facts.fact.html'><a href="{1}">Интересный факт</a></message>
+    <message id='facts.fact.id'>№</message>
+    <message id='facts.fact.text'>факт</message>
+    <message id='facts.fact.when_added'>время добавления</message>
+    <message id='facts.fact.references_template'>
+        <h1>Ссылки</h1>
+        <br />Простая ссылка: <br /> ${simple}
+        <br />Ссылка для форума: <br /> ${forum}
+        <br />HTML-ссылка: <br /> ${html}
+    </message>
+
+</messages>
+
