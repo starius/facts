@@ -84,6 +84,11 @@ public:
         setColumnAlignment(TEXT_COLUMN, Wt::AlignLeft | Wt::AlignTop);
         addStyleClass("facts-commentsview");
     }
+
+    void goto_index(int index) {
+        index = model()->rowCount() - index;
+        scrollTo(model()->index(index, 0), Wt::WAbstractItemView::PositionAtTop);
+    }
 };
 
 class CommentAddForm : public Wt::WTemplate {
@@ -155,6 +160,10 @@ CommentsWidget::CommentsWidget(const FactPtr& fact, Wt::WContainerWidget* p):
     view_ = new CommentsView(model);
     show_button_();
     bindWidget("comments", view_);
+    int index = fApp->comment_index(fact);
+    if (index != -1) {
+        view_->goto_index(index);
+    }
     t.commit();
 }
 
