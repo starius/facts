@@ -41,7 +41,7 @@ public:
     }
 
     /** Get the email of commenter */
-    const std::string& email() {
+    const std::string& email() const {
         return email_;
     }
 
@@ -51,7 +51,7 @@ public:
     }
 
     /** Get the text of comment */
-    const Wt::WString& text() {
+    const Wt::WString& text() const {
         return text_;
     }
 
@@ -61,7 +61,7 @@ public:
     }
 
     /** Get the datetime of comment added */
-    const Wt::WDateTime& when_added() {
+    const Wt::WDateTime& when_added() const {
         return when_added_;
     }
 
