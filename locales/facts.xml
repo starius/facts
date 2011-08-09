@@ -10,13 +10,31 @@
  See the LICENSE file for terms of use.
 -->
 
-    <message id='facts.common.id_format'>#{1}</message>
-
     <message id='facts.admin.Add'>Add</message>
     <message id='facts.admin.Enter_admin'>Enter the administrator's page</message>
     <message id='facts.admin.Enter_admin_password'>Enter admin password</message>
     <message id='facts.admin.Save'>Save</message>
     <message id='facts.admin.Wrong_admin_password'>Wrong password</message>
+
+    <message id='facts.comment.Add'>Add comment</message>
+    <message id='facts.comment.Email'>E-mail</message>
+    <message id='facts.comment.Incorrect'>Incorrect username, e-mail or text</message>
+    <message id='facts.comment.Username'>User name</message>
+    <message id='facts.comment.add_template'>
+        ${username} ${email}
+        <br /> ${text}
+        <br /> ${button} ${error}
+    </message>
+    <message id='facts.comment.comments_template'>
+        ${add}
+        <br /> ${comments}
+    </message>
+    <message id='facts.comment.format'>
+        {1} {2} {3}
+        {4}
+    </message>
+
+    <message id='facts.common.id_format'>#{1}</message>
 
     <message id='facts.fact.Already_voted'>Your IP address has already voted!</message>
     <message id='facts.fact.forum'>[url={1}]Interesting fact[/url]</message>
@@ -29,24 +47,6 @@
         <br />Simple reference: <br /> ${simple}
         <br />Forum reference: <br /> ${forum}
         <br />HTML reference: <br /> ${html}
-    </message>
-
-    <message id='facts.comment.Add'>Add comment</message>
-    <message id='facts.comment.Email'>E-mail</message>
-    <message id='facts.comment.Incorrect'>Incorrect username, e-mail or text</message>
-    <message id='facts.comment.Username'>User name</message>
-    <message id='facts.comment.add_template'>
-        ${username} ${email}
-        <br /> ${text}
-        <br /> ${button} ${error}
-    </message>
-    <message id='facts.comment.format'>
-        {1} {2} {3}
-        {4}
-    </message>
-    <message id='facts.comment.comments_template'>
-        ${add}
-        <br /> ${comments}
     </message>
 
 </messages>
