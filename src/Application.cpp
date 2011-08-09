@@ -43,6 +43,14 @@ std::string Application::comment_path(const CommentPtr& comment) const {
     return str(comment_path_format_ % comment.id().fact.id() % comment.id().index);
 }
 
+int Application::comment_index(const FactPtr& fact) const {
+    try {
+        return boost::lexical_cast<int>(internalPathNextPart(fact_path(fact)));
+    } catch (...) {
+        return -1;
+    }
+}
+
 std::string Application::admin_path() const {
     return "/admin/";
 }

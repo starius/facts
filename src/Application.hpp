@@ -42,6 +42,9 @@ public:
     /** Genarate internel path for the comment */
     std::string comment_path(const CommentPtr& fact) const;
 
+    /** Get comment index or -1 for bad internal path */
+    int comment_index(const FactPtr& fact) const;
+
     /** Get internal path used for admin widget */
     std::string admin_path() const;
 
