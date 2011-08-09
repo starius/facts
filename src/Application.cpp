@@ -55,6 +55,12 @@ std::string Application::admin_path() const {
     return "/admin/";
 }
 
+void Application::setInternalPath(const std::string& path) {
+    if (!internalPathMatches(path)) {
+        WApplication::setInternalPath(path);
+    }
+}
+
 void Application::path_changed_handler_() {
     dbo::Transaction t(session());
     std::string section = internalPathNextPart("/");

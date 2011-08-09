@@ -58,6 +58,9 @@ public:
         admin_ = v;
     }
 
+    /** Run WApplication::setInternalPath() if current path not matched */
+    void setInternalPath(const std::string& path);
+
 private:
     Session session_;
     mutable boost::format fact_path_format_;
