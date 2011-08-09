@@ -19,6 +19,7 @@ namespace facts {
 Application::Application(const Wt::WEnvironment& env, Server& server):
     Wt::WApplication(env), session_(server),
     fact_path_format_("/fact/%i/"),
+    comment_path_format_("/fact/%i/%i/"),
     admin_(false) {
     messageResourceBundle().use(Wt::WApplication::appRoot() +
                                 "locales/facts");
@@ -35,6 +36,10 @@ Application* Application::instance() {
 
 std::string Application::fact_path(FactPtr fact) const {
     return str(fact_path_format_ % fact.id());
+}
+
+std::string Application::comment_path(CommentPtr comment) const {
+    return str(comment_path_format_ % comment.id().fact.id() % comment.id().index);
 }
 
 void Application::path_changed_handler_() {

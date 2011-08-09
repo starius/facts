@@ -16,6 +16,7 @@
 
 #include "Session.hpp"
 #include "model/Fact.hpp"
+#include "model/Comment.hpp"
 
 #define fApp facts::Application::instance()
 
@@ -39,6 +40,9 @@ public:
     /** Genarate internel path for the fact */
     std::string fact_path(FactPtr fact) const;
 
+    /** Genarate internel path for the comment */
+    std::string comment_path(CommentPtr fact) const;
+
     /** Return if the user has admin permissions */
     bool admin() const {
         return admin_;
@@ -52,6 +56,7 @@ public:
 private:
     Session session_;
     mutable boost::format fact_path_format_;
+    mutable boost::format comment_path_format_;
     FactsWidget* facts_;
     bool admin_;
 
