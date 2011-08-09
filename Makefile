@@ -125,7 +125,9 @@ ifeq ($(MODE), fcgi)
 	sed 's@<num-threads>1</num-threads>@<num-threads>2</num-threads>@' -i $@
 endif
 	sed 's@<behind-reverse-proxy>false</behind-reverse-proxy>@<behind-reverse-proxy>true</behind-reverse-proxy>@' -i $@
-	sed 's@</properties>@<property name="approot">$(APPROOT)</property></properties>@' -i $@
+	sed 's@</properties>@<property name="approot">$(APPROOT)</property>\
+		<property name="tinyMCEBaseURL">tinymce/</property>\
+		</properties>@' -i $@
 
 images: files/favicon.ico files/img/logo.png files/img/update.png \
 	files/img/right-arrow.png files/img/left-arrow.png files/img/up-arrow.png files/img/down-arrow.png
