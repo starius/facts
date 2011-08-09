@@ -10,6 +10,8 @@
  See the LICENSE file for terms of use.
 -->
 
+    <message id='facts.common.id_format'>#{1}</message>
+
     <message id='facts.admin.Add'>Add</message>
     <message id='facts.admin.Enter_admin'>Enter the administrator's page</message>
     <message id='facts.admin.Enter_admin_password'>Enter admin password</message>
@@ -27,6 +29,23 @@
         <br />Simple reference: <br /> ${simple}
         <br />Forum reference: <br /> ${forum}
         <br />HTML reference: <br /> ${html}
+    </message>
+
+    <message id='facts.comment.Add'>Add comment</message>
+    <message id='facts.comment.Email'>E-mail</message>
+    <message id='facts.comment.Username'>User name</message>
+    <message id='facts.comment.add_template'>
+        ${username} ${email}
+        <br /> ${text}
+        <br /> ${button} ${error}
+    </message>
+    <message id='facts.comment.format'>
+        {1} ({2}), {3}
+        {4}
+    </message>
+    <message id='facts.comment.comments_template'>
+        ${add}
+        <br /> ${comments}
     </message>
 
 </messages>
