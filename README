@@ -25,8 +25,26 @@ Build-requirements:
 Build and run:
  * run `make` to build the executable
  * run `make run` to run the server
+ * run `make install` to install the application system-wide
 Variables of Makefile:
  * BUILD (=debug), build type: debug | release
  * MODE (=http), wt connector: http | fcgi
  * PORT (=5711), ADDRESS (=0.0.0.0): port and address of http or fcgi server
+Installation-only variables:
+ * RUN_USER (=www-data), RUN_GROUP (=www-data), owner of installed non-executable files
+ * INTEGRATE_INTO, comma-separated list of services to integrate into (possible: nginx,monit)
+ * URL_PREFIX, url-prefix to use while integrating into web-servers
+ * HOST_NAME (=facts), hostname to use while integrating into web-servers
+ * NGINX_CONF = /etc/nginx/sites-available/facts
+ * MONIT_CONF = /etc/monit/conf.d/facts
+
+Following standard variables affect installation paths:
+ * prefix = /usr/local
+ * exec_prefix = $(prefix)
+ * datarootdir = $(prefix)/share
+ * datadir = $(datarootdir)
+ * sysconfdir = $(prefix)/etc
+ * localstatedir = $(prefix)/var
+ * bindir = $(exec_prefix)/bin
+To use ubuntu standard paths use `make install-ubuntu` instead of `make install`.
 
