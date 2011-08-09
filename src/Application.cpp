@@ -20,7 +20,7 @@ namespace facts {
 Application::Application(const Wt::WEnvironment& env, Server& server):
     Wt::WApplication(env), session_(server),
     fact_path_format_("/fact/%i/"),
-    comment_path_format_("/fact/%i/%i/"),
+    comment_path_format_("/fact/%i/comment/%i/"),
     admin_(false) {
     messageResourceBundle().use(Wt::WApplication::appRoot() +
                                 "locales/facts");
@@ -45,7 +45,7 @@ std::string Application::comment_path(const CommentPtr& comment) const {
 
 int Application::comment_index(const FactPtr& fact) const {
     try {
-        return boost::lexical_cast<int>(internalPathNextPart(fact_path(fact)));
+        return boost::lexical_cast<int>(internalPathNextPart(fact_path(fact) + "comment/"));
     } catch (...) {
         return -1;
     }
