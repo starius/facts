@@ -13,7 +13,7 @@
 #include <Wt/WContainerWidget>
 #include <Wt/WText>
 
-#include "model/Fact.hpp"
+#include "model/models.hpp"
 
 namespace facts {
 namespace dbo = Wt::Dbo;
@@ -22,7 +22,7 @@ namespace dbo = Wt::Dbo;
 */
 class FactWidget : public Wt::WContainerWidget {
 public:
-    FactWidget(FactPtr fact, Wt::WContainerWidget* p=0);
+    FactWidget(const FactPtr& fact, Wt::WContainerWidget* p=0);
 
 private:
     FactPtr fact_;
@@ -35,5 +35,4 @@ private:
 }
 
 #endif
-
 

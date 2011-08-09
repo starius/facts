@@ -9,10 +9,6 @@
 
 #include "Server.hpp"
 
-#include "Application.hpp"
-#include "model/Fact.hpp"
-#include "widgets/FactWidget.hpp"
-
 int main(int argc, char **argv) {
     facts::Server server(argc, argv);
     if (server.start()) {

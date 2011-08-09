@@ -42,7 +42,7 @@ public:
                     int role=Wt::DisplayRole) const {
         dbo::Transaction t(fApp->session());
         if (role == Wt::InternalPathRole && index.column() == n_column) {
-            FactPtr o = resultRow(index.row());
+            const FactPtr& o = resultRow(index.row());
             return fApp->fact_path(o);
         }
         return BaseQM::data(index, role);

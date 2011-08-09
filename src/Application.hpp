@@ -15,8 +15,7 @@
 #include <Wt/WApplication>
 
 #include "Session.hpp"
-#include "model/Fact.hpp"
-#include "model/Comment.hpp"
+#include "model/models.hpp"
 
 #define fApp facts::Application::instance()
 
@@ -38,10 +37,10 @@ public:
     }
 
     /** Genarate internel path for the fact */
-    std::string fact_path(FactPtr fact) const;
+    std::string fact_path(const FactPtr& fact) const;
 
     /** Genarate internel path for the comment */
-    std::string comment_path(CommentPtr fact) const;
+    std::string comment_path(const CommentPtr& fact) const;
 
     /** Return if the user has admin permissions */
     bool admin() const {

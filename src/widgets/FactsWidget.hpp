@@ -13,7 +13,7 @@
 #include <Wt/WContainerWidget>
 #include <Wt/WBorderLayout>
 
-#include "model/Fact.hpp"
+#include "model/models.hpp"
 
 namespace Wt {
 class WLineEdit;
@@ -28,7 +28,7 @@ public:
     FactsWidget(Wt::WContainerWidget* p=0);
 
     /** Show the fact */
-    void set_fact(FactPtr fact);
+    void set_fact(const FactPtr& fact);
 
 private:
     Wt::WBorderLayout* layout_;

@@ -132,7 +132,7 @@ void FactsWidget::id_clicked_handler_() {
     refs->bindWidget("html", html);
 }
 
-void FactsWidget::set_fact(FactPtr fact) {
+void FactsWidget::set_fact(const FactPtr& fact) {
     dbo::Transaction t(fApp->session());
     shown_fact_ = fact;
     setWidget(new FactWidget(fact));

@@ -8,6 +8,7 @@
  */
 
 #include "model/Vote.hpp"
+#include "model/Fact.hpp"
 
 namespace facts {
 

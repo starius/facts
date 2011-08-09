@@ -12,10 +12,10 @@
 
 #include <Wt/Dbo/Transaction>
 
+#include "Session.hpp"
 #include "model/Fact.hpp"
 #include "model/Vote.hpp"
 #include "model/Comment.hpp"
-#include "Session.hpp"
 #include "Server.hpp"
 
 namespace facts {

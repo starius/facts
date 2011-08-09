@@ -8,6 +8,7 @@
  */
 
 #include "model/Comment.hpp"
+#include "model/Fact.hpp"
 
 namespace facts {
 

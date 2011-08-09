@@ -11,8 +11,9 @@
 #include <Wt/Dbo/Transaction>
 namespace dbo = Wt::Dbo;
 
-#include "widgets/FactsWidget.hpp"
 #include "Application.hpp"
+#include "model/Fact.hpp"
+#include "widgets/FactsWidget.hpp"
 
 namespace facts {
 
@@ -34,11 +35,11 @@ Application* Application::instance() {
     return static_cast<Application*>(Wt::WApplication::instance());
 }
 
-std::string Application::fact_path(FactPtr fact) const {
+std::string Application::fact_path(const FactPtr& fact) const {
     return str(fact_path_format_ % fact.id());
 }
 
-std::string Application::comment_path(CommentPtr comment) const {
+std::string Application::comment_path(const CommentPtr& comment) const {
     return str(comment_path_format_ % comment.id().fact.id() % comment.id().index);
 }
 

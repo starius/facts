@@ -63,7 +63,7 @@ struct VoteId {
     VoteId()
     { }
 
-    VoteId(FactPtr f, const std::string& i):
+    VoteId(const FactPtr& f, const std::string& i):
         fact(f), ip(i)
     { }
 
@@ -125,7 +125,7 @@ struct CommentId {
     CommentId()
     { }
 
-    CommentId(FactPtr f, int i):
+    CommentId(const FactPtr& f, int i):
         fact(f), index(i)
     { }
 

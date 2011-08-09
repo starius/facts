@@ -17,11 +17,12 @@
 namespace dbo = Wt::Dbo;
 
 #include "widgets/FactWidget.hpp"
+#include "model/Fact.hpp"
 #include "Application.hpp"
 
 namespace facts {
 
-FactWidget::FactWidget(FactPtr fact, Wt::WContainerWidget* p):
+FactWidget::FactWidget(const FactPtr& fact, Wt::WContainerWidget* p):
     Wt::WContainerWidget(p),
     fact_(fact) {
     resize(Wt::WLength(70, Wt::WLength::Percentage), Wt::WLength());
