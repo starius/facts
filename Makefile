@@ -37,6 +37,7 @@ DOCROOT_PARENT = $(datadir)/facts
 STARTER = $(bindir)/facts
 FCGI_RUN_DIR = $(VAR_RUN)
 PID_FILE = $(VAR_RUN)/facts.pid
+LOG_FILE = $(localstatedir)/log/facts.log
 else
 WT_CONFIG = $(BUILD)/wt_config_$(MODE).xml
 EXE_PATH = $(EXE)
@@ -79,6 +80,12 @@ install: $$(EXE) images $$(WT_CONFIG)
 	mkdir -p $(VAR_RUN)
 	chown $(RUN_USER):$(RUN_GROUP) $(VAR_RUN)
 	chmod 770 $(VAR_RUN)
+ifneq (,$(LOG_FILE))
+	mkdir -p $(dir $(LOG_FILE))
+	touch $(LOG_FILE)
+	chown $(RUN_USER):$(RUN_GROUP) $(LOG_FILE)
+	chmod 660 $(LOG_FILE)
+endif
 ifneq (,$(findstring nginx,$(INTEGRATE_INTO)))
 	cp --backup nginx.in $(NGINX_CONF)
 	sed 's@HOST_NAME@$(HOST_NAME)@' -i $(NGINX_CONF)
@@ -124,6 +131,7 @@ ifeq ($(MODE), fcgi)
 	sed 's@$(FCGI_RUN_DIR_ORIGINAL)@$(FCGI_RUN_DIR)@' -i $@
 	sed 's@<num-threads>1</num-threads>@<num-threads>2</num-threads>@' -i $@
 endif
+	sed 's@<log-file></log-file>@<log-file>$(LOG_FILE)</log-file>@' -i $@
 	sed 's@<behind-reverse-proxy>false</behind-reverse-proxy>@<behind-reverse-proxy>true</behind-reverse-proxy>@' -i $@
 	sed 's@</properties>@<property name="approot">$(APPROOT)</property>\
 		<property name="tinyMCEBaseURL">tinymce/</property>\
