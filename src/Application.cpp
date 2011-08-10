@@ -56,6 +56,18 @@ std::string Application::admin_path() const {
     return "/admin/";
 }
 
+std::string Application::random_fact_path() const {
+    return "/fact/random/";
+}
+
+std::string Application::prev_fact_path() const {
+    return "/fact/prev/";
+}
+
+std::string Application::next_fact_path() const {
+    return "/fact/next/";
+}
+
 void Application::setInternalPath(const std::string& path) {
     if (!internalPathMatches(path)) {
         WApplication::setInternalPath(path);
@@ -81,12 +93,20 @@ void Application::path_changed_handler_() {
     std::string section = internalPathNextPart("/");
     if (section == "fact") {
         std::string fact_str = internalPathNextPart("/fact/");
-        try {
-            int fact_id = boost::lexical_cast<int>(fact_str);
-            FactPtr fact = session().load<Fact>(fact_id);
-            facts_->set_fact(fact);
-        } catch (dbo::ObjectNotFoundException)
-        { }
+        if (fact_str == "random") {
+            facts_->set_random_fact();
+        } else if (fact_str == "prev") {
+            facts_->set_prev_fact();
+        } else if (fact_str == "next") {
+            facts_->set_next_fact();
+        } else {
+            try {
+                int fact_id = boost::lexical_cast<int>(fact_str);
+                FactPtr fact = session().load<Fact>(fact_id);
+                facts_->set_fact(fact);
+            } catch (...)
+            { }
+        }
     }
     if (section == "admin") {
         facts_->try_admin_enter();

@@ -33,6 +33,15 @@ public:
     /** Try to enter admin panel */
     void try_admin_enter();
 
+    /** Go to randow fact */
+    void set_random_fact();
+
+    /** Go to previous fact */
+    void set_prev_fact();
+
+    /** Go to next fact */
+    void set_next_fact();
+
 private:
     Wt::WBorderLayout* layout_;
     Wt::WLineEdit* admin_password_;
@@ -42,9 +51,6 @@ private:
     void setWidget(Wt::WWidget* widget,
                    Wt::WBorderLayout::Position position=Wt::WBorderLayout::Center);
     void enter_handler_();
-    void set_random_fact_();
-    void set_prev_fact_();
-    void set_next_fact_();
     void id_clicked_handler_();
     void add_west_();
     void show_admin_widget_();

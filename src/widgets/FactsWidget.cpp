@@ -12,9 +12,7 @@
 #include <Wt/WPushButton>
 #include <Wt/WLineEdit>
 #include <Wt/WText>
-#include <Wt/WAnchor>
 #include <Wt/WEnvironment>
-#include <Wt/WImage>
 #include <Wt/WTemplate>
 
 #include "widgets/FactsWidget.hpp"
@@ -24,6 +22,7 @@
 #include "Session.hpp"
 #include "Application.hpp"
 #include "config.hpp"
+#include "utils.hpp"
 
 namespace facts {
 
@@ -46,15 +45,12 @@ FactsWidget::FactsWidget(Wt::WContainerWidget* p):
     layout_ = new Wt::WBorderLayout();
     setLayout(layout_, Wt::AlignTop | Wt::AlignJustify);
     Wt::WContainerWidget* logo_c = new Wt::WContainerWidget();
-    Wt::WImage* logo = new Wt::WImage("img/logo.png");
-    Wt::WAnchor* logo_anchor = new Wt::WAnchor(logo_c);
-    logo_anchor->setRefInternalPath(fApp->admin_path());
-    logo_anchor->setImage(logo);
+    a_img("img/logo.png", fApp->admin_path(), logo_c);
     logo_c->setContentAlignment(Wt::AlignCenter);
     layout_->addWidget(logo_c, Wt::WBorderLayout::North);
     add_west_();
     if (fApp->internalPath().size() <= 1) {
-        set_random_fact_();
+        set_random_fact();
     }
 }
 
@@ -93,7 +89,7 @@ void FactsWidget::enter_handler_() {
     }
 }
 
-void FactsWidget::set_prev_fact_() {
+void FactsWidget::set_prev_fact() {
     dbo::Transaction t(fApp->session());
     try {
         FactPtr fact = fApp->session().load<Fact>(shown_fact_.id() - 1);
@@ -103,7 +99,7 @@ void FactsWidget::set_prev_fact_() {
     t.commit();
 }
 
-void FactsWidget::set_next_fact_() {
+void FactsWidget::set_next_fact() {
     dbo::Transaction t(fApp->session());
     try {
         FactPtr fact = fApp->session().load<Fact>(shown_fact_.id() + 1);
@@ -113,7 +109,7 @@ void FactsWidget::set_next_fact_() {
     t.commit();
 }
 
-void FactsWidget::set_random_fact_() {
+void FactsWidget::set_random_fact() {
     dbo::Transaction t(fApp->session());
     int facts_number = fApp->session().query<int>("select count(1) from facts_fact");
     FactPtr fact;
@@ -152,21 +148,12 @@ void FactsWidget::add_west_() {
     setWidget(west, Wt::WBorderLayout::West);
     west->setMinimumSize(175, Wt::WLength());
     west->setContentAlignment(Wt::AlignCenter);
-    Wt::WImage* update = new Wt::WImage("img/update.png", west);
-    update->clicked().connect(this, &FactsWidget::set_random_fact_);
-    update->decorationStyle().setCursor(Wt::PointingHandCursor);
-    update->setInline(false);
-    Wt::WImage* prev = new Wt::WImage("img/left-arrow.png", west);
-    prev->clicked().connect(this, &FactsWidget::set_prev_fact_);
-    prev->decorationStyle().setCursor(Wt::PointingHandCursor);
-    prev->setVerticalAlignment(Wt::AlignMiddle);
+    a_img("img/update.png", fApp->random_fact_path(), west)->setInline(false);
+    a_img("img/left-arrow.png", fApp->prev_fact_path(), west);
     fact_id_ = new Wt::WPushButton(west);
     fact_id_->clicked().connect(this, &FactsWidget::id_clicked_handler_);
     fact_id_->setVerticalAlignment(Wt::AlignMiddle);
-    Wt::WImage* next = new Wt::WImage("img/right-arrow.png", west);
-    next->clicked().connect(this, &FactsWidget::set_next_fact_);
-    next->decorationStyle().setCursor(Wt::PointingHandCursor);
-    next->setVerticalAlignment(Wt::AlignMiddle);
+    a_img("img/right-arrow.png", fApp->next_fact_path(), west);
 }
 
 void FactsWidget::show_admin_widget_() {

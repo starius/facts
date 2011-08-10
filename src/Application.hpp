@@ -48,6 +48,15 @@ public:
     /** Get internal path used for admin widget */
     std::string admin_path() const;
 
+    /** Get internal path used for random fact */
+    std::string random_fact_path() const;
+
+    /** Get internal path used for prev fact */
+    std::string prev_fact_path() const;
+
+    /** Get internal path used for next fact */
+    std::string next_fact_path() const;
+
     /** Return if the user has admin permissions */
     bool admin() const {
         return admin_;
