@@ -38,6 +38,7 @@ STARTER = $(bindir)/facts
 FCGI_RUN_DIR = $(VAR_RUN)
 PID_FILE = $(VAR_RUN)/facts.pid
 LOG_FILE = $(localstatedir)/log/facts.log
+SOCKET = $(VAR_RUN)/facts.socket
 else
 WT_CONFIG = $(BUILD)/wt_config_$(MODE).xml
 EXE_PATH = $(EXE)
@@ -45,6 +46,7 @@ APPROOT = .
 DOCROOT_PARENT = .
 FCGI_RUN_DIR = $(BUILD)/run
 PID_FILE = $(BUILD)/facts-$(MODE).pid
+SOCKET = $(BUILD)/facts-$(MODE).socket
 endif
 DOCROOT = $(DOCROOT_PARENT)/files
 
@@ -52,7 +54,12 @@ ifeq ($(MODE), http)
 RUN_COMMAND = WT_CONFIG_XML=$(WT_CONFIG) $(EXE_PATH) --http-address=$(ADDRESS) --http-port=$(PORT) \
 			  --docroot="$(DOCROOT)/;/resources,/img,/js,/css,/tinymce,/favicon.ico" -p $(PID_FILE)
 else
-RUN_COMMAND = WT_CONFIG_XML=$(WT_CONFIG) spawn-fcgi -n -f $(EXE_PATH) -a $(ADDRESS) -p $(PORT) -P $(PID_FILE)
+RUN_COMMAND = WT_CONFIG_XML=$(WT_CONFIG) spawn-fcgi -n -f $(EXE_PATH) -P $(PID_FILE)
+ifeq (,$(SOCKET))
+RUN_COMMAND += -a $(ADDRESS) -p $(PORT)
+else
+RUN_COMMAND += -s $(SOCKET)
+endif
 endif
 
 build: $$(EXE)
@@ -92,12 +99,16 @@ ifneq (,$(findstring nginx,$(INTEGRATE_INTO)))
 	sed 's@HOST_NAME@$(HOST_NAME)@' -i $(NGINX_CONF)
 	sed 's@URL_PREFIX@$(URL_PREFIX)@' -i $(NGINX_CONF)
 	sed 's@DOCROOT@$(DOCROOT)@' -i $(NGINX_CONF)
-	sed 's@PORT@$(PORT)@' -i $(NGINX_CONF)
-	sed 's@ADDRESS@$(ADDRESS)@' -i $(NGINX_CONF)
 ifeq ($(MODE), http)
-	sed 's@fastcgi_pass@proxy_pass@' -i $(NGINX_CONF)
-	sed 's@include fastcgi_params;@proxy_set_header X-Forwarded-Host $$server_name;@' -i $(NGINX_CONF)
-	sed 's@$(ADDRESS):$(PORT)@http://$(ADDRESS):$(PORT)/@' -i $(NGINX_CONF)
+	sed 's@BACKEND@proxy_pass http://$(ADDRESS):$(PORT)/@' -i $(NGINX_CONF)
+	sed 's@PARAMS@proxy_set_header X-Forwarded-Host $$server_name@' -i $(NGINX_CONF)
+else
+	sed 's@PARAMS@include fastcgi_params@' -i $(NGINX_CONF)
+ifneq (,$(SOCKET))
+	sed 's@BACKEND@fastcgi_pass unix:$(SOCKET)@' -i $(NGINX_CONF)
+else
+	sed 's@BACKEND@fastcgi_pass $(ADDRESS):$(PORT)@' -i $(NGINX_CONF)
+endif
 endif
 	if [ -h $(NGINX_CONF2) ]; then rm $(NGINX_CONF2); fi
 	ln -s $(NGINX_CONF) $(NGINX_CONF2)

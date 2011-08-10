@@ -11,7 +11,7 @@ Runtime-requirements:
    at least libwt, libwthttp, libwtsqlite3
  * boost: signals, thread, random, system, regex
  * crypt (for -lcrypt)
- * lighttpd (for spawn-fcgi when run in fcgi mode)
+ * spawn-fcgi (for fcgi mode)
 
 Build-requirements:
  * ccache
@@ -30,6 +30,9 @@ Variables of Makefile:
  * BUILD (=debug), build type: debug | release
  * MODE (=http), wt connector: http | fcgi
  * PORT (=5711), ADDRESS (=0.0.0.0): port and address of http or fcgi server
+ * SOCKET (=/var/run/facts/facts.socket for install version,
+            $(BUILD)/facts-$(MODE).socket for local version)
+   Only for fcgi mode. Connection through unix socket is prefered over ADDRESS:PORT, if both given.
 Installation-only variables:
  * RUN_USER (=www-data), RUN_GROUP (=www-data), owner of installed non-executable files
  * INTEGRATE_INTO, comma-separated list of services to integrate into (possible: nginx,monit)

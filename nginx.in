@@ -10,8 +10,8 @@ server {
 	}
 
 	location /URL_PREFIX {
-		fastcgi_pass   ADDRESS:PORT;
-		include fastcgi_params;
+		BACKEND;
+		PARAMS;
 	}
 
 }
