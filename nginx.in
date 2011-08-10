@@ -5,7 +5,7 @@ server {
 	server_name  HOST_NAME;
 	access_log	/var/log/nginx/facts.access.log;
 
-	location ~ /URL_PREFIX((img|fav|res|css).*) {
+	location ~ /URL_PREFIX((img|fav|res|css|tiny).*) {
 		alias DOCROOT/$1;
 	}
 
