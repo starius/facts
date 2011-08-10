@@ -18,7 +18,7 @@ Build-requirements:
  * g++ 4.5+ (lto is used in release version)
  * gnu make
  * qmake
- * inkscape (Font Steve is used for logo and favicon)
+ * inkscape (Font Steve (package ttf-sjfonts) is used for logo and favicon)
  * convert by ImageMagick
  * upx (is used to compress release version)
 
