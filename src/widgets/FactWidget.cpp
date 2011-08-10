@@ -61,10 +61,15 @@ void FactWidget::vote_(short diff) {
     try {
         fApp->session().load<Vote>(vote_id);
         score_->setText(tr("facts.fact.Already_voted"));
-    } catch (dbo::ObjectNotFoundException) {
-        fApp->session().add(new Vote(vote_id, diff));
-        set_score_();
+        return;
+    } catch (dbo::ObjectNotFoundException)
+    { }
+    if (fApp->is_banned()) {
+        score_->setText(tr("facts.common.BannedIp"));
+        return;
     }
+    fApp->session().add(new Vote(vote_id, diff));
+    set_score_();
     t.commit();
 }
 

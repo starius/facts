@@ -36,6 +36,7 @@
         {4}
     </message>
 
+    <message id='facts.common.BannedIp'>Sorry, your IP address is banned</message>
     <message id='facts.common.id_format'>#{1}</message>
 
     <message id='facts.fact.Already_voted'>Your IP address has already voted!</message>

@@ -172,6 +172,10 @@ private:
             return;
         }
         dbo::Transaction t(fApp->session());
+        if (fApp->is_banned()) {
+            error_->setText(tr("facts.common.BannedIp"));
+            return;
+        }
         int index;
         if (comments_->fact()->comments().size()) {
             index = 1 + fApp->session()
