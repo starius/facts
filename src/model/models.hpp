@@ -17,6 +17,8 @@
 #include <Wt/Dbo/collection>
 namespace dbo = Wt::Dbo;
 
+const int MAX_IP_LENGTH = 45;
+
 /** \name Declarations of all models */
 /* @{ */
 
@@ -24,14 +26,17 @@ namespace facts {
 class Fact;
 class Vote;
 class Comment;
+class Ban;
 
 typedef dbo::ptr<Fact> FactPtr;
 typedef dbo::ptr<Vote> VotePtr;
 typedef dbo::ptr<Comment> CommentPtr;
+typedef dbo::ptr<Ban> BanPtr;
 
 typedef dbo::collection<FactPtr> Facts;
 typedef dbo::collection<VotePtr> Votes;
 typedef dbo::collection<CommentPtr> Comments;
+typedef dbo::collection<BanPtr> Bans;
 }
 
 /* @} */
@@ -90,7 +95,6 @@ template <class Action>
 void field(Action& action, facts::VoteId& vote_id,
            const std::string& /* name */ , int /* size */ = -1) {
     belongsTo(action, vote_id.fact, "fact", OnDeleteCascade);
-    const int MAX_IP_LENGTH = 45;
     field(action, vote_id.ip, "ip", MAX_IP_LENGTH);
 }
 
@@ -177,6 +181,37 @@ struct dbo_traits<facts::Comment> : public dbo_default_traits {
 
 template<>
 void id(FromAnyAction&, facts::CommentId&, const std::string&, int);
+
+}
+}
+
+/* @} */
+
+/** \name Settings of Ban model */
+/* @{ */
+
+namespace Wt {
+namespace Dbo {
+
+template<>
+struct dbo_traits<facts::Ban> : public dbo_default_traits {
+    typedef std::string IdType;
+
+    static IdType invalidId() {
+        return IdType();
+    }
+
+    static const char *surrogateIdField() {
+        return 0;
+    }
+
+    static const char *versionField() {
+        return 0;
+    }
+};
+
+template<>
+void id(FromAnyAction&, std::string&, const std::string&, int);
 
 }
 }

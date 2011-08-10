@@ -16,6 +16,7 @@
 #include "model/Fact.hpp"
 #include "model/Vote.hpp"
 #include "model/Comment.hpp"
+#include "model/Ban.hpp"
 #include "Server.hpp"
 
 namespace facts {
@@ -25,6 +26,7 @@ Session::Session(Server& server) {
     mapClass<Fact>("facts_fact");
     mapClass<Vote>("facts_vote");
     mapClass<Comment>("facts_comment");
+    mapClass<Ban>("facts_ban");
 }
 
 void Session::reconsider() {

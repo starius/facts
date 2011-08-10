@@ -83,6 +83,7 @@ public:
         dbo::field(a, text_, "text");
         dbo::field(a, when_added_, "when_added", 50);
         dbo::field(a, deleted_, "deleted");
+        dbo::field(a, ip_, "ip", MAX_IP_LENGTH);
     }
 
     friend class Session;
@@ -93,6 +94,7 @@ private:
     Wt::WString text_;
     Wt::WDateTime when_added_;
     bool deleted_;
+    std::string ip_;
 };
 
 }
