@@ -17,7 +17,8 @@ Comment::Comment()
 
 Comment::Comment(const CommentId& id):
     id_(id),
-    when_added_(Wt::WDateTime::currentDateTime())
+    when_added_(Wt::WDateTime::currentDateTime()),
+    deleted_(false)
 { }
 
 std::ostream& operator<< (std::ostream& o, const CommentId& vi) {

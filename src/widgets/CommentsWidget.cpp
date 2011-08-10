@@ -60,8 +60,12 @@ public:
                 return tr("facts.common.id_format").arg(o.id().index);
             }
         } else if (index.column() == TEXT_COLUMN && role == Wt::DisplayRole) {
-            return tr("facts.comment.format").arg(o->username()).arg(o->email())
-                   .arg(o->when_added().toString()).arg(o->text());
+            if (o->deleted()) {
+                return tr("facts.comment.deleted");
+            } else {
+                return tr("facts.comment.format").arg(o->username()).arg(o->email())
+                       .arg(o->when_added().toString()).arg(o->text());
+            }
         }
         return BaseQM::data(index, role);
     }

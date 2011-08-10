@@ -17,6 +17,7 @@
     <message id='facts.admin.Wrong_admin_password'>Неверный пароль</message>
 
     <message id='facts.comment.Add'>Добавить комментарий</message>
+    <message id='facts.comment.deleted'><i>[[Комментарий удален]]</i></message>
     <message id='facts.comment.Email'>Адрес элекстронной почты</message>
     <message id='facts.comment.Incorrect'>Неправильно введено имя пользователя, e-mail или текст</message>
     <message id='facts.comment.Username'>Имя пользователя</message>

@@ -65,6 +65,16 @@ public:
         return when_added_;
     }
 
+    /** Get if the comment was deleted */
+    bool deleted() const {
+        return deleted_;
+    }
+
+    /** Set if the comment was deleted */
+    void set_deleted(bool v=true) {
+        deleted_ = v;
+    }
+
     template<class Action>
     void persist(Action& a) {
         dbo::id(a, id_, "id");
@@ -72,6 +82,7 @@ public:
         dbo::field(a, email_, "email", 50);
         dbo::field(a, text_, "text");
         dbo::field(a, when_added_, "when_added", 50);
+        dbo::field(a, deleted_, "deleted");
     }
 
     friend class Session;
@@ -81,6 +92,7 @@ private:
     std::string email_;
     Wt::WString text_;
     Wt::WDateTime when_added_;
+    bool deleted_;
 };
 
 }
