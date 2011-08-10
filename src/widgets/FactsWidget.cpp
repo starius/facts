@@ -49,9 +49,6 @@ FactsWidget::FactsWidget(Wt::WContainerWidget* p):
     logo_c->setContentAlignment(Wt::AlignCenter);
     layout_->addWidget(logo_c, Wt::WBorderLayout::North);
     add_west_();
-    if (fApp->internalPath().size() <= 1) {
-        set_random_fact();
-    }
 }
 
 void FactsWidget::setWidget(Wt::WWidget* widget, Wt::WBorderLayout::Position position) {

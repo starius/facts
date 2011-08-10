@@ -29,7 +29,8 @@ Application::Application(const Wt::WEnvironment& env, Server& server):
     useStyleSheet("css/facts.css");
     facts_ = new FactsWidget(root());
     internalPathChanged().connect(this, &Application::path_changed_handler_);
-    path_changed_handler_();
+    facts_->set_random_fact();
+    WApplication::setInternalPath(environment().internalPath(), true);
 }
 
 Application* Application::instance() {
