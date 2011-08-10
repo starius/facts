@@ -108,12 +108,11 @@ void FactsWidget::set_next_fact() {
 
 void FactsWidget::set_random_fact() {
     dbo::Transaction t(fApp->session());
-    int facts_number = fApp->session().query<int>("select count(1) from facts_fact");
-    FactPtr fact;
-    while (!fact || (fact == shown_fact_ && facts_number > 1)) {
-        int offset = Wt::WRandom::get() % facts_number;
-        fact = fApp->session().find<Fact>().offset(offset).limit(1).resultValue();
-    }
+    int facts_number = fApp->session().query<int>("select count(1) from facts_fact")
+                       .where("id != ?").bind(shown_fact_.id());
+    int offset = Wt::WRandom::get() % facts_number;
+    FactPtr fact = fApp->session().find<Fact>().where("id != ?").bind(shown_fact_.id())
+                   .offset(offset).limit(1).resultValue();
     set_fact(fact);
     t.commit();
 }
