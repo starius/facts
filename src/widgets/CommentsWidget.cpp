@@ -7,6 +7,7 @@
  * See the LICENSE file for terms of use.
  */
 
+#include <Wt/WEnvironment>
 #include <Wt/WContainerWidget>
 #include <Wt/WTableView>
 #include <Wt/Dbo/Transaction>
@@ -198,6 +199,11 @@ CommentsWidget::CommentsWidget(const FactPtr& fact, Wt::WContainerWidget* p):
     view_ = new CommentsView(model);
     show_button_();
     bindWidget("comments", view_);
+    if (fApp->admin() && !fApp->environment().ajax()) {
+        bindWidget("save", new Wt::WPushButton(tr("facts.admin.Save")));
+    } else {
+        bindString("save", "");
+    }
     int index = fApp->comment_index(fact);
     if (index != -1) {
         view_->goto_index(index);

@@ -27,7 +27,7 @@
         <br /> ${button} ${error}
     </message>
     <message id='facts.comment.comments_template'>
-        ${add}
+        ${add} ${save}
         <br /> <br />
         ${comments}
     </message>
