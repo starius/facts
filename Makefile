@@ -49,6 +49,7 @@ PID_FILE = $(BUILD)/facts-$(MODE).pid
 SOCKET = $(BUILD)/facts-$(MODE).socket
 endif
 DOCROOT = $(DOCROOT_PARENT)/files
+NGINX_SCRIPT_NAME = fastcgi_param	SCRIPT_NAME		/$(URL_PREFIX)
 
 ifeq ($(MODE), http)
 RUN_COMMAND = WT_CONFIG_XML=$(WT_CONFIG) $(EXE_PATH) --http-address=$(ADDRESS) --http-port=$(PORT) \
@@ -104,7 +105,11 @@ ifeq ($(MODE), http)
 	sed 's@BACKEND@proxy_pass http://$(ADDRESS):$(PORT)/@' -i $(NGINX_CONF)
 	sed 's@PARAMS@proxy_set_header X-Forwarded-Host $$server_name@' -i $(NGINX_CONF)
 else
-	sed 's@PARAMS@include fastcgi_params@' -i $(NGINX_CONF)
+	sed 's@PARAMS@$(NGINX_SCRIPT_NAME);\
+		include fastcgi_params;\
+		$(NGINX_SCRIPT_NAME);\
+		if ($$document_uri ~ "^/$(URL_PREFIX)(.*)") { set $$apache_path_info /$$1; }\
+		fastcgi_param PATH_INFO $$apache_path_info@' -i $(NGINX_CONF)
 ifneq (,$(SOCKET))
 	sed 's@BACKEND@fastcgi_pass unix:$(SOCKET)@' -i $(NGINX_CONF)
 else
