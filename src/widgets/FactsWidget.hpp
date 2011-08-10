@@ -30,6 +30,9 @@ public:
     /** Show the fact */
     void set_fact(const FactPtr& fact);
 
+    /** Try to enter admin panel */
+    void try_admin_enter();
+
 private:
     Wt::WBorderLayout* layout_;
     Wt::WLineEdit* admin_password_;
@@ -38,7 +41,6 @@ private:
 
     void setWidget(Wt::WWidget* widget,
                    Wt::WBorderLayout::Position position=Wt::WBorderLayout::Center);
-    void enter_admin_handler_();
     void enter_handler_();
     void set_random_fact_();
     void set_prev_fact_();

@@ -73,6 +73,9 @@ void Application::path_changed_handler_() {
         } catch (dbo::ObjectNotFoundException)
         { }
     }
+    if (section == "admin") {
+        facts_->try_admin_enter();
+    }
     t.commit();
 }
 

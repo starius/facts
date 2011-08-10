@@ -12,6 +12,7 @@
 #include <Wt/WPushButton>
 #include <Wt/WLineEdit>
 #include <Wt/WText>
+#include <Wt/WAnchor>
 #include <Wt/WEnvironment>
 #include <Wt/WImage>
 #include <Wt/WTemplate>
@@ -45,8 +46,10 @@ FactsWidget::FactsWidget(Wt::WContainerWidget* p):
     layout_ = new Wt::WBorderLayout();
     setLayout(layout_, Wt::AlignTop | Wt::AlignJustify);
     Wt::WContainerWidget* logo_c = new Wt::WContainerWidget();
-    Wt::WImage* logo = new Wt::WImage("img/logo.png", logo_c);
-    logo->clicked().connect(this, &FactsWidget::enter_admin_handler_);
+    Wt::WImage* logo = new Wt::WImage("img/logo.png");
+    Wt::WAnchor* logo_anchor = new Wt::WAnchor(logo_c);
+    logo_anchor->setRefInternalPath(fApp->admin_path());
+    logo_anchor->setImage(logo);
     logo_c->setContentAlignment(Wt::AlignCenter);
     layout_->addWidget(logo_c, Wt::WBorderLayout::North);
     add_west_();
@@ -64,7 +67,7 @@ void FactsWidget::setWidget(Wt::WWidget* widget, Wt::WBorderLayout::Position pos
     layout_->addWidget(widget, position);
 }
 
-void FactsWidget::enter_admin_handler_() {
+void FactsWidget::try_admin_enter() {
     if (fApp->admin()) {
         show_admin_widget_();
     } else {
