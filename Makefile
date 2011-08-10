@@ -74,6 +74,7 @@ run: $(EXE) images $$(WT_CONFIG)
 	$(RUN_COMMAND)
 
 install: $$(EXE) images $$(WT_CONFIG)
+	chown -R $(RUN_USER):$(RUN_GROUP) $(WT_CONFIG)
 	mkdir -p $(bindir)
 	cp $(EXE) $(bindir)
 	mkdir -p $(APPROOT) $(DOCROOT_PARENT)
@@ -136,6 +137,7 @@ uninstall-ubuntu:
 $(WT_CONFIG): /etc/wt/wt_config.xml Makefile
 	mkdir -p $(dir $@)
 	cp --backup $< $@
+	chmod 660 $@
 ifeq ($(MODE), fcgi)
 	mkdir -p $(FCGI_RUN_DIR)
 	sed 's@$(FCGI_RUN_DIR_ORIGINAL)@$(FCGI_RUN_DIR)@' -i $@
@@ -145,6 +147,7 @@ endif
 	sed 's@<behind-reverse-proxy>false</behind-reverse-proxy>@<behind-reverse-proxy>true</behind-reverse-proxy>@' -i $@
 	sed 's@</properties>@<property name="approot">$(APPROOT)</property>\
 		<property name="tinyMCEBaseURL">tinymce/</property>\
+		<property name="adminPassword">asuperes</property>\
 		</properties>@' -i $@
 
 images: files/favicon.ico files/img/logo.png files/img/update.png \
