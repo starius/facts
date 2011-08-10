@@ -53,11 +53,13 @@ public:
                     int role=Wt::DisplayRole) const {
         dbo::Transaction t(fApp->session());
         const CommentPtr& o = resultRow(index.row());
-        if (role == Wt::InternalPathRole && index.column() == INDEX_COLUMN) {
-            return fApp->comment_path(o);
-        } else if (role == Wt::DisplayRole && index.column() == INDEX_COLUMN) {
-            return tr("facts.common.id_format").arg(o.id().index);
-        } else if (role == Wt::DisplayRole && index.column() == TEXT_COLUMN) {
+        if (index.column() == INDEX_COLUMN) {
+            if (role == Wt::InternalPathRole) {
+                return fApp->comment_path(o);
+            } else if (role == Wt::DisplayRole) {
+                return tr("facts.common.id_format").arg(o.id().index);
+            }
+        } else if (index.column() == TEXT_COLUMN && role == Wt::DisplayRole) {
             return tr("facts.comment.format").arg(o->username()).arg(o->email())
                    .arg(o->when_added().toString()).arg(o->text());
         }
