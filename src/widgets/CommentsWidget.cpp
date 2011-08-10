@@ -30,9 +30,6 @@ typedef CommentPtr Result;
 typedef dbo::Query<Result> Q;
 typedef dbo::QueryModel<Result> BaseQM;
 
-const int INDEX_COLUMN = 0;
-const int TEXT_COLUMN = 1;
-
 const int INPUT_SIZE = 25;
 const int TEXT_COLUMNS = 80;
 const int ROW_HEIGHT = 140;
@@ -43,8 +40,14 @@ const int MAX_TEXT_SIZE = 2000;
 class CommentsModel : public BaseQM {
 public:
     CommentsModel(const Q& query, Wt::WObject *parent=0) :
-        BaseQM(parent) {
+        BaseQM(parent),
+        deleted_column(fApp->admin() ? 0 : -1),
+        index_column(fApp->admin() ? 1 : 0),
+        text_column(fApp->admin() ? 2 : 1) {
         setQuery(query);
+        if (deleted_column != -1) {
+            addColumn("deleted", "", Wt::ItemIsEditable | Wt::ItemIsUserCheckable);
+        }
         addColumn("comment_index", "");
         addColumn("text", "", Wt::ItemIsXHTMLText);
     }
@@ -53,13 +56,19 @@ public:
                     int role=Wt::DisplayRole) const {
         dbo::Transaction t(fApp->session());
         const CommentPtr& o = resultRow(index.row());
-        if (index.column() == INDEX_COLUMN) {
+        if (index.column() == deleted_column) {
+            if (role == Wt::DisplayRole) {
+                return "";
+            } else if (role == Wt::CheckStateRole) {
+                return o->deleted();
+            }
+        } else if (index.column() == index_column) {
             if (role == Wt::InternalPathRole) {
                 return fApp->comment_path(o);
             } else if (role == Wt::DisplayRole) {
                 return tr("facts.common.id_format").arg(o.id().index);
             }
-        } else if (index.column() == TEXT_COLUMN && role == Wt::DisplayRole) {
+        } else if (index.column() == text_column && role == Wt::DisplayRole) {
             if (o->deleted()) {
                 return tr("facts.comment.deleted");
             } else {
@@ -70,9 +79,26 @@ public:
         return BaseQM::data(index, role);
     }
 
+    bool setData(const Wt::WModelIndex& index, const boost::any& value,
+                 int role=Wt::EditRole) {
+        if (role == Wt::CheckStateRole && value.type() == typeid(bool)) {
+            dbo::Transaction t(fApp->session());
+            const CommentPtr& o = resultRow(index.row());
+            o.modify()->set_deleted(boost::any_cast<bool>(value));
+            t.commit();
+            dataChanged().emit(index, this->index(index.row(), text_column));
+            return true;
+        }
+        return BaseQM::setData(index, value, Wt::EditRole);
+    }
+
     static Wt::WString tr(const char* key) {
         return Wt::WString::tr(key);
     }
+
+    const int deleted_column;
+    const int index_column;
+    const int text_column;
 };
 
 class CommentsView : public Wt::WTableView {
@@ -82,12 +108,18 @@ public:
         setModel(model);
         setSortingEnabled(false);
         resize(770, 450);
-        setColumnWidth(INDEX_COLUMN, 40);
-        setColumnWidth(TEXT_COLUMN, 700);
+        if (model->deleted_column != -1) {
+            setColumnWidth(model->deleted_column, 20);
+        }
+        setColumnWidth(model->index_column, 40);
+        setColumnWidth(model->text_column, model->deleted_column != -1 ? 660 : 700);
         setHeaderHeight(0);
         setRowHeight(ROW_HEIGHT);
-        setColumnAlignment(INDEX_COLUMN, Wt::AlignRight | Wt::AlignTop);
-        setColumnAlignment(TEXT_COLUMN, Wt::AlignLeft | Wt::AlignTop);
+        if (model->deleted_column != -1) {
+            setColumnAlignment(model->deleted_column, Wt::AlignRight | Wt::AlignTop);
+        }
+        setColumnAlignment(model->index_column, Wt::AlignRight | Wt::AlignTop);
+        setColumnAlignment(model->text_column, Wt::AlignLeft | Wt::AlignTop);
         addStyleClass("facts-commentsview");
     }
 
