@@ -13,6 +13,7 @@ namespace dbo = Wt::Dbo;
 
 #include "Application.hpp"
 #include "model/Fact.hpp"
+#include "model/Ban.hpp"
 #include "widgets/FactsWidget.hpp"
 
 namespace facts {
@@ -59,6 +60,20 @@ void Application::setInternalPath(const std::string& path) {
     if (!internalPathMatches(path)) {
         WApplication::setInternalPath(path);
     }
+}
+
+bool Application::is_banned() const {
+    dbo::Transaction t(session_);
+    bool result = false;
+    try {
+        BanPtr ban = session_.load<Ban>(environment().clientAddress());
+        if (ban->banned()) {
+            result = true;
+        }
+    } catch (dbo::ObjectNotFoundException)
+    { }
+    t.commit();
+    return result;
 }
 
 void Application::path_changed_handler_() {

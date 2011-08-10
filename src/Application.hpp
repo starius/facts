@@ -61,8 +61,11 @@ public:
     /** Run WApplication::setInternalPath() if current path not matched */
     void setInternalPath(const std::string& path);
 
+    /** Return if current IP is banned */
+    bool is_banned() const;
+
 private:
-    Session session_;
+    mutable Session session_;
     mutable boost::format fact_path_format_;
     mutable boost::format comment_path_format_;
     FactsWidget* facts_;
