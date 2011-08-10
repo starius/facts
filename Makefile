@@ -96,7 +96,7 @@ ifneq (,$(LOG_FILE))
 	chmod 660 $(LOG_FILE)
 endif
 ifneq (,$(findstring nginx,$(INTEGRATE_INTO)))
-	cp --backup nginx.in $(NGINX_CONF)
+	cp --backup=numbered nginx.in $(NGINX_CONF)
 	sed 's@HOST_NAME@$(HOST_NAME)@' -i $(NGINX_CONF)
 	sed 's@URL_PREFIX@$(URL_PREFIX)@' -i $(NGINX_CONF)
 	sed 's@DOCROOT@$(DOCROOT)@' -i $(NGINX_CONF)
@@ -115,7 +115,7 @@ endif
 	ln -s $(NGINX_CONF) $(NGINX_CONF2)
 endif
 ifneq (,$(findstring monit,$(INTEGRATE_INTO)))
-	cp --backup monit.in $(MONIT_CONF)
+	cp --backup=numbered monit.in $(MONIT_CONF)
 	sed 's@PID_FILE@$(PID_FILE)@' -i $(MONIT_CONF)
 	sed 's@STARTER@$(STARTER)@' -i $(MONIT_CONF)
 	sed 's@RUN_USER@$(RUN_USER)@' -i $(MONIT_CONF)
@@ -136,7 +136,7 @@ uninstall-ubuntu:
 
 $(WT_CONFIG): /etc/wt/wt_config.xml Makefile
 	mkdir -p $(dir $@)
-	cp --backup $< $@
+	cp --backup=numbered $< $@
 	chmod 660 $@
 ifeq ($(MODE), fcgi)
 	mkdir -p $(FCGI_RUN_DIR)
