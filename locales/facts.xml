@@ -11,10 +11,15 @@
 -->
 
     <message id='facts.admin.Add'>Add</message>
+    <message id='facts.admin.banned'>is banned</message>
+    <message id='facts.admin.Duplicate_ip'>Duplicate IP address</message>
     <message id='facts.admin.Enter_admin'>Enter the administrator's page</message>
     <message id='facts.admin.Enter_admin_password'>Enter admin password</message>
+    <message id='facts.admin.Enter_ip'>Enter IP address</message>
+    <message id='facts.admin.ip'>ip address</message>
     <message id='facts.admin.Save'>Save</message>
     <message id='facts.admin.Wrong_admin_password'>Wrong password</message>
+    <message id='facts.admin.Wrong_ip'>Wrong IP address</message>
 
     <message id='facts.comment.Add'>Add comment</message>
     <message id='facts.comment.deleted'><i>[[This comment was deleted]]</i></message>

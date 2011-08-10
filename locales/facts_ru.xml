@@ -11,10 +11,15 @@
 -->
 
     <message id='facts.admin.Add'>Добавить</message>
+    <message id='facts.admin.banned'>забанен</message>
+    <message id='facts.admin.Duplicate_ip'>Повторяющийся IP адрес</message>
     <message id='facts.admin.Enter_admin'>Войти на страницу администратора</message>
     <message id='facts.admin.Enter_admin_password'>Введите пароль администратора</message>
+    <message id='facts.admin.Enter_ip'>Введите IP адрес</message>
+    <message id='facts.admin.ip'>ip адрес</message>
     <message id='facts.admin.Save'>Сохранить</message>
     <message id='facts.admin.Wrong_admin_password'>Неверный пароль</message>
+    <message id='facts.admin.Wrong_ip'>Неправильный IP адрес</message>
 
     <message id='facts.comment.Add'>Добавить комментарий</message>
     <message id='facts.comment.deleted'><i>[[Комментарий удален]]</i></message>
