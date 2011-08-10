@@ -62,6 +62,13 @@ std::string Application::admin_path() const {
     return "/admin/";
 }
 
+std::string Application::ip_from_path() const {
+    if (internalPathMatches("/admin/ip/")) {
+        return internalPathNextPart("/admin/ip/");
+    }
+    return "";
+}
+
 std::string Application::random_fact_path() const {
     return "/fact/random/";
 }

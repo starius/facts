@@ -48,6 +48,11 @@ public:
     /** Get internal path used for admin widget */
     std::string admin_path() const;
 
+    /** Get the ip address from internal path like /admin/ip/1.2.3.4/.
+    On error returns empty string
+    */
+    std::string ip_from_path() const;
+
     /** Get internal path used for random fact */
     std::string random_fact_path() const;
 
