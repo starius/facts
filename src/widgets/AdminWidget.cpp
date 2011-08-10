@@ -17,6 +17,7 @@
 
 #include "widgets/AdminWidget.hpp"
 #include "model/Fact.hpp"
+#include "widgets/BanWidget.hpp"
 #include "Application.hpp"
 
 namespace facts {
@@ -59,7 +60,7 @@ public:
     FactListView(FactListModel* model, Wt::WContainerWidget* p=0):
         Wt::WTableView(p) {
         setModel(model);
-        resize(770, 450);
+        resize(770, 250);
         setColumnWidth(N_COLUMN, 40);
         setColumnWidth(TEXT_COLUMN, 570);
         setColumnWidth(WHEN_ADDED_COLUMN, 75);
@@ -78,6 +79,7 @@ AdminWidget::AdminWidget(Wt::WContainerWidget* p):
     Q query = fApp->session().find<Fact>();
     FactListModel* model = new FactListModel(query, this);
     view_ = new FactListView(model, this);
+    new BanWidget(this);
     t.commit();
 }
 
