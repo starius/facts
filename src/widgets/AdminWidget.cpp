@@ -7,6 +7,7 @@
  * See the LICENSE file for terms of use.
  */
 
+#include <Wt/WEnvironment>
 #include <Wt/WTableView>
 #include <Wt/Dbo/Transaction>
 #include <Wt/Dbo/Query>
@@ -81,14 +82,18 @@ AdminWidget::AdminWidget(Wt::WContainerWidget* p):
 }
 
 void AdminWidget::save_handler_() {
-    view_->closeEditors();
+    if (fApp->environment().ajax()) { // FIXME
+        view_->closeEditors();
+    }
     dbo::Transaction t(fApp->session());
     fApp->session().flush();
     t.commit();
 }
 
 void AdminWidget::add_handler_() {
-    view_->closeEditors();
+    if (fApp->environment().ajax()) { // FIXME
+        view_->closeEditors();
+    }
     dbo::Transaction t(fApp->session());
     fApp->session().add(new Fact(true));
     fApp->session().flush();
