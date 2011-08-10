@@ -46,8 +46,13 @@ std::string Application::comment_path(const CommentPtr& comment) const {
 }
 
 int Application::comment_index(const FactPtr& fact) const {
+    std::string comment_base = fact_path(fact) + "comment/";
+    if (!internalPathMatches(comment_base)) {
+        return -1;
+    }
     try {
-        return boost::lexical_cast<int>(internalPathNextPart(fact_path(fact) + "comment/"));
+        std::string comment_str = internalPathNextPart(comment_base);
+        return boost::lexical_cast<int>(comment_str);
     } catch (...) {
         return -1;
     }
