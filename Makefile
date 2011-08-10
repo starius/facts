@@ -71,7 +71,8 @@ install: $$(EXE) images $$(WT_CONFIG)
 	cp $(EXE) $(bindir)
 	mkdir -p $(APPROOT) $(DOCROOT_PARENT)
 	cp -ra files locales $(DOCROOT_PARENT)
-	if [ ! -d $(APPROOT)/locales ]; then ln -s $(DOCROOT_PARENT)/locales $(APPROOT); fi
+	if [ -h $(APPROOT)/locales ]; then rm $(APPROOT)/locales; fi
+	ln -s $(DOCROOT_PARENT)/locales $(APPROOT)/locales
 	chown -R $(RUN_USER):$(RUN_GROUP) $(APPROOT) $(DOCROOT_PARENT)
 	chmod 770 $(APPROOT)
 	echo '#!/bin/sh' > $(STARTER)
@@ -98,7 +99,8 @@ ifeq ($(MODE), http)
 	sed 's@include fastcgi_params;@proxy_set_header X-Forwarded-Host $$server_name;@' -i $(NGINX_CONF)
 	sed 's@$(ADDRESS):$(PORT)@http://$(ADDRESS):$(PORT)/@' -i $(NGINX_CONF)
 endif
-	if [ ! -f $(NGINX_CONF2) ]; then ln -s $(NGINX_CONF) $(NGINX_CONF2); fi
+	if [ -h $(NGINX_CONF2) ]; then rm $(NGINX_CONF2); fi
+	ln -s $(NGINX_CONF) $(NGINX_CONF2)
 endif
 ifneq (,$(findstring monit,$(INTEGRATE_INTO)))
 	cp --backup monit.in $(MONIT_CONF)
