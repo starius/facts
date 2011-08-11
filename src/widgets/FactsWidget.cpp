@@ -66,6 +66,7 @@ void FactsWidget::try_admin_enter() {
     } else {
         Wt::WContainerWidget* p = new Wt::WContainerWidget();
         admin_password_ = new Wt::WLineEdit(p);
+        admin_password_->setFocus();
         admin_password_->setEchoMode(Wt::WLineEdit::Password);
         admin_password_->setEmptyText(tr("facts.admin.Enter_admin_password"));
         admin_password_->enterPressed().connect(this, &FactsWidget::enter_handler_);
