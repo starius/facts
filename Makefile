@@ -139,6 +139,9 @@ install-ubuntu:
 uninstall-ubuntu:
 	$(MAKE) uninstall prefix=/usr sysconfdir=/etc localstatedir=/var
 
+doc: images
+	doxygen
+
 $(WT_CONFIG): /etc/wt/wt_config.xml Makefile
 	mkdir -p $(dir $@)
 	cp --backup=numbered $< $@

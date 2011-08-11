@@ -1,0 +1,22 @@
+
+namespace facts {
+
+/** \mainpage facts
+
+The project is web application, implemented in C++ using library Wt.
+The web applications shows a randomly chosen fact from database.
+Features:
+ - vote system
+ - comments system
+ - admin panel
+ - ban by ip address
+ - several deployment options, intergation into nginx and monit
+
+\section Model
+
+\section View
+
+*/
+
+}
+
