@@ -165,13 +165,17 @@ private:
 
     void add_handler_() {
         Wt::WValidator::State V = Wt::WValidator::Valid;
-        if (username_->validate() != V || email_->validate() != V) {
-            error_->setText(tr("facts.comment.Incorrect"));
+        if (username_->validate() != V) {
+            error_->setText(tr("facts.comment.Incorrect_username"));
+            return;
+        }
+        if (email_->validate() != V) {
+            error_->setText(tr("facts.comment.Incorrect_email"));
             return;
         }
         int input_length = text_->text().value().size();
         if (input_length < MIN_INPUT_SIZE || input_length > MAX_TEXT_SIZE) {
-            error_->setText(tr("facts.comment.Incorrect"));
+            error_->setText(tr("facts.comment.Incorrect_text"));
             return;
         }
         dbo::Transaction t(fApp->session());
