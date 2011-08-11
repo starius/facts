@@ -10,7 +10,6 @@ Runtime-requirements:
  * Wt 3.1.10+: http://www.webtoolkit.eu/wt/doc/reference/html/InstallationUnix.html
    at least libwt, libwthttp, libwtsqlite3
  * boost: signals, thread, random, system, regex
- * crypt (for -lcrypt)
  * spawn-fcgi (for fcgi mode)
 
 Build-requirements:
