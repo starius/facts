@@ -43,13 +43,13 @@
 
     <message id='facts.common.BannedIp'>Sorry, your IP address is banned</message>
     <message id='facts.common.id_format'>#{1}</message>
+    <message id='facts.common.when_added'>addition time</message>
 
     <message id='facts.fact.Already_voted'>Your IP address has already voted!</message>
     <message id='facts.fact.forum'>[url={1}]Interesting fact[/url]</message>
     <message id='facts.fact.html'><a href="{1}">Interesting fact</a></message>
     <message id='facts.fact.id'>#</message>
     <message id='facts.fact.text'>fact</message>
-    <message id='facts.fact.when_added'>addition time</message>
     <message id='facts.fact.references_template'>
         <h1>References</h1>
         <br />Simple reference: <br /> ${simple}

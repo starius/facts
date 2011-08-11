@@ -37,7 +37,7 @@ public:
         setQuery(query);
         addColumn("id", tr("facts.fact.id"));
         addColumn("text", tr("facts.fact.text"), Wt::ItemIsEditable);
-        addColumn("when_added", tr("facts.fact.when_added"));
+        addColumn("when_added", tr("facts.common.when_added"));
     }
 
     boost::any data(const Wt::WModelIndex& index,

@@ -40,7 +40,7 @@ public:
         setQuery(query);
         addColumn("banned", tr("facts.admin.banned"), Wt::ItemIsEditable | Wt::ItemIsUserCheckable);
         addColumn("ip", tr("facts.admin.ip"));
-        addColumn("when_added", tr("facts.fact.when_added"));
+        addColumn("when_added", tr("facts.common.when_added"));
     }
 
     boost::any data(const Wt::WModelIndex& index,

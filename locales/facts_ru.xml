@@ -29,13 +29,13 @@
 
     <message id='facts.common.BannedIp'>Извините, Ваш IP адрес заблокирован</message>
     <message id='facts.common.id_format'>№{1}</message>
+    <message id='facts.common.when_added'>время добавления</message>
 
     <message id='facts.fact.Already_voted'>Ваш IP адрес уже голосовал!</message>
     <message id='facts.fact.forum'>[url={1}]Интересный факт[/url]</message>
     <message id='facts.fact.html'><a href="{1}">Интересный факт</a></message>
     <message id='facts.fact.id'>№</message>
     <message id='facts.fact.text'>факт</message>
-    <message id='facts.fact.when_added'>время добавления</message>
     <message id='facts.fact.references_template'>
         <h1>Ссылки</h1>
         <br />Простая ссылка: <br /> ${simple}
