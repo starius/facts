@@ -38,6 +38,7 @@
     </message>
     <message id='facts.comment.format'>
         {1} {2} {3}
+        <br />
         {4}
     </message>
 
