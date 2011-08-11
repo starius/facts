@@ -31,7 +31,7 @@ td {
     color: #9B9B9B;
 }
 
-.facts-commentsview .Wt-spacer {
+.facts-commentsview div {
     background: transparent !important;
 }
 
