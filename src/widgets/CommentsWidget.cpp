@@ -146,8 +146,6 @@ public:
         email_->setValidator(new Wt::WRegExpValidator(EMAIL_PATTERN));
         text_ = new Wt::WTextEdit();
         text_->setColumns(TEXT_COLUMNS);
-        text_->setValidator(new Wt::WLengthValidator(MIN_INPUT_SIZE, MAX_TEXT_SIZE));
-        text_->validator()->setMandatory(true);
         Wt::WPushButton* add_button = new Wt::WPushButton(tr("facts.comment.Add"));
         add_button->clicked().connect(this, &CommentAddForm::add_handler_);
         error_ = new Wt::WText();
@@ -167,7 +165,12 @@ private:
 
     void add_handler_() {
         Wt::WValidator::State V = Wt::WValidator::Valid;
-        if (username_->validate() != V || email_->validate() != V || text_->validate() != V) {
+        if (username_->validate() != V || email_->validate() != V) {
+            error_->setText(tr("facts.comment.Incorrect"));
+            return;
+        }
+        int input_length = text_->text().value().size();
+        if (input_length < MIN_INPUT_SIZE || input_length > MAX_TEXT_SIZE) {
             error_->setText(tr("facts.comment.Incorrect"));
             return;
         }
