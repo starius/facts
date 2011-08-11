@@ -232,8 +232,11 @@ void CommentsWidget::show_button_() {
 }
 
 void CommentsWidget::show_form_() {
-    CommentAddForm* add = new CommentAddForm(this);
-    bindWidget("add", add);
+    if (fApp->is_banned()) {
+        bindString("add", tr("facts.common.BannedIp"));
+    } else {
+        bindWidget("add", new CommentAddForm(this));
+    }
 }
 
 }
