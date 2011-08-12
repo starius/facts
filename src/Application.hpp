@@ -96,6 +96,7 @@ private:
     bool admin_;
 
     void path_changed_handler_();
+    void init_counters_();
 };
 
 }

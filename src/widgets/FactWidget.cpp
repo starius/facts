@@ -11,6 +11,8 @@
 
 #include <Wt/WEnvironment>
 #include <Wt/WText>
+#include <Wt/WTemplate>
+#include <Wt/WTable>
 #include <Wt/WBreak>
 #include <Wt/WImage>
 #include <Wt/Dbo/Transaction>
@@ -23,6 +25,22 @@ namespace dbo = Wt::Dbo;
 
 namespace facts {
 
+class ExternalCounters : public Wt::WTable {
+public:
+    ExternalCounters(FactWidget* p=0):
+        Wt::WTable(p) {
+        std::string url = fApp->makeAbsoluteUrl(fApp->bookmarkUrl(fApp->fact_path(p->fact())));
+        const std::string& vk_div = elementAt(0, 0)->id();
+        const Wt::WString& text = p->fact()->text();
+        int fact_id = p->fact().id();
+        boost::format vk("VK.Widgets.Like('%s', {type: 'vertical', pageUrl: '%s', pageTitle: '%s'}, %i);");
+        doJavaScript(str(vk % vk_div % url % text % fact_id));
+        Wt::WTemplate* twit = new Wt::WTemplate();
+        twit->setTemplateText(tr("facts.counters.twit_template"), Wt::XHTMLUnsafeText);
+        elementAt(0, 1)->addWidget(twit);
+    }
+};
+
 FactWidget::FactWidget(const FactPtr& fact, Wt::WContainerWidget* p):
     Wt::WContainerWidget(p),
     fact_(fact) {
@@ -30,6 +48,8 @@ FactWidget::FactWidget(const FactPtr& fact, Wt::WContainerWidget* p):
     dbo::Transaction t(fApp->session());
     Wt::WText* text = new Wt::WText(fact_->text(), this);
     text->setStyleClass("facts-text");
+    new Wt::WBreak(this);
+    new ExternalCounters(this);
     new Wt::WBreak(this);
     Wt::WImage* diff_minus = new Wt::WImage("img/down-arrow.png", this);
     score_ = new Wt::WText(this);

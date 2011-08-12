@@ -156,6 +156,7 @@ endif
 	sed 's@</properties>@<property name="approot">$(APPROOT)</property>\
 		<property name="tinyMCEBaseURL">tinymce/</property>\
 		<property name="adminPassword">asuperes</property>\
+		<property name="API_ID">123</property>\
 		</properties>@' -i $@
 
 images: files/favicon.ico files/img/doxylogo.png files/img/logo.png files/img/update.png \

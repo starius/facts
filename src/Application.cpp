@@ -24,6 +24,7 @@ Application::Application(const Wt::WEnvironment& env, Server& server):
     comment_path_format_("/fact/%i/comment/%i/"),
     ip_path_format_("/admin/ip/%s/"),
     admin_(false) {
+    init_counters_();
     messageResourceBundle().use(Wt::WApplication::appRoot() +
                                 "locales/facts");
     setCssTheme("polished");
@@ -136,6 +137,12 @@ void Application::path_changed_handler_() {
         facts_->try_admin_enter();
     }
     t.commit();
+}
+
+void Application::init_counters_() {
+    require("http://userapi.com/js/api/openapi.js?34", "VK");
+    doJavaScript("VK.init({apiId: " + read_config("API_ID") + ", onlyWidgets: true});");
+    require("http://platform.twitter.com/widgets.js");
 }
 
 }

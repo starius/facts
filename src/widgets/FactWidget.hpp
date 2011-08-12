@@ -24,6 +24,11 @@ class FactWidget : public Wt::WContainerWidget {
 public:
     FactWidget(const FactPtr& fact, Wt::WContainerWidget* p=0);
 
+    /** Get the fact */
+    const FactPtr& fact() const {
+        return fact_;
+    }
+
 private:
     FactPtr fact_;
     Wt::WText* score_;

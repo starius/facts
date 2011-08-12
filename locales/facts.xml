@@ -48,6 +48,10 @@
     <message id='facts.common.id_format'>#{1}</message>
     <message id='facts.common.when_added'>addition time</message>
 
+    <message id='facts.counters.twit_template'>
+        <a href="http://twitter.com/share" class="twitter-share-button" data-count="vertical" target="blank">Tweet</a>
+    </message>
+
     <message id='facts.fact.Already_voted'>Your IP address has already voted!</message>
     <message id='facts.fact.forum'>[url={1}]Interesting fact[/url]</message>
     <message id='facts.fact.html'><a href="{1}">Interesting fact</a></message>
