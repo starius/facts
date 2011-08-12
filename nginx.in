@@ -1,7 +1,7 @@
 
 server {
 
-	listen	 127.0.0.1:80;
+	listen	 0.0.0.0:80;
 	server_name  HOST_NAME;
 	access_log	/var/log/nginx/facts.access.log;
 
