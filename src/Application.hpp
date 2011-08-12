@@ -48,6 +48,9 @@ public:
     /** Get internal path used for admin widget */
     std::string admin_path() const;
 
+    /** Generate internal path for ip */
+    std::string ip_path(const std::string& ip) const;
+
     /** Get the ip address from internal path like /admin/ip/1.2.3.4/.
     On error returns empty string
     */
@@ -82,6 +85,7 @@ private:
     mutable Session session_;
     mutable boost::format fact_path_format_;
     mutable boost::format comment_path_format_;
+    mutable boost::format ip_path_format_;
     FactsWidget* facts_;
     bool admin_;
 

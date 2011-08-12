@@ -22,6 +22,7 @@ Application::Application(const Wt::WEnvironment& env, Server& server):
     Wt::WApplication(env), session_(server),
     fact_path_format_("/fact/%i/"),
     comment_path_format_("/fact/%i/comment/%i/"),
+    ip_path_format_("/admin/ip/%s/"),
     admin_(false) {
     messageResourceBundle().use(Wt::WApplication::appRoot() +
                                 "locales/facts");
@@ -60,6 +61,10 @@ int Application::comment_index(const FactPtr& fact) const {
 
 std::string Application::admin_path() const {
     return "/admin/";
+}
+
+std::string Application::ip_path(const std::string& ip) const {
+    return str(ip_path_format_ % ip);
 }
 
 std::string Application::ip_from_path() const {

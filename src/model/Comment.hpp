@@ -75,6 +75,16 @@ public:
         deleted_ = v;
     }
 
+    /** Get the IP address of the author */
+    const std::string& ip() const {
+        return ip_;
+    }
+
+    /** Set the IP address of the author */
+    void set_ip(const std::string& v) {
+        ip_ = v;
+    }
+
     template<class Action>
     void persist(Action& a) {
         dbo::id(a, id_, "id");

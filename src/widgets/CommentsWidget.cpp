@@ -44,12 +44,16 @@ public:
         BaseQM(parent),
         deleted_column(fApp->admin() ? 0 : -1),
         index_column(fApp->admin() ? 1 : 0),
-        text_column(fApp->admin() ? 2 : 1) {
+        ip_column(fApp->admin() ? 2 : -1),
+        text_column(fApp->admin() ? 3 : 1) {
         setQuery(query);
         if (deleted_column != -1) {
             addColumn("deleted", "", Wt::ItemIsEditable | Wt::ItemIsUserCheckable);
         }
         addColumn("comment_index", "");
+        if (ip_column != -1) {
+            addColumn("ip", "");
+        }
         addColumn("text", "", Wt::ItemIsXHTMLText);
     }
 
@@ -69,6 +73,8 @@ public:
             } else if (role == Wt::DisplayRole) {
                 return tr("facts.common.id_format").arg(o.id().index);
             }
+        } else if (index.column() == ip_column && role == Wt::InternalPathRole) {
+            return fApp->ip_path(o->ip());
         } else if (index.column() == text_column && role == Wt::DisplayRole) {
             if (o->deleted()) {
                 return tr("facts.comment.deleted");
@@ -99,6 +105,7 @@ public:
 
     const int deleted_column;
     const int index_column;
+    const int ip_column;
     const int text_column;
 };
 
@@ -195,6 +202,7 @@ private:
         c.modify()->set_username(username_->text());
         c.modify()->set_email(email_->text().toUTF8());
         c.modify()->set_text(text_->text());
+        c.modify()->set_ip(fApp->environment().clientAddress());
         comments_->comment_added_handler_(); // delete this
         t.commit();
     }
