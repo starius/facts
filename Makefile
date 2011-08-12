@@ -158,7 +158,7 @@ endif
 		<property name="adminPassword">asuperes</property>\
 		</properties>@' -i $@
 
-images: files/favicon.ico files/img/logo.png files/img/update.png \
+images: files/favicon.ico files/img/doxylogo.png files/img/logo.png files/img/update.png \
 	files/img/right-arrow.png files/img/left-arrow.png files/img/up-arrow.png files/img/down-arrow.png
 
 files/favicon.ico: files/favicon.svg
@@ -166,6 +166,9 @@ files/favicon.ico: files/favicon.svg
 
 files/img/logo.png: files/favicon.svg
 	inkscape -z -w 200 -e $@ $<
+
+files/img/doxylogo.png: files/favicon.svg
+	inkscape -z -w 50 -e $@ $<
 
 files/img/update.png: files/img/update.svg
 	inkscape -z -w 64 -e $@ $<
