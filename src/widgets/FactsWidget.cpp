@@ -79,9 +79,7 @@ void FactsWidget::try_admin_enter() {
 }
 
 void FactsWidget::enter_handler_() {
-    std::string password;
-    bool defined = Wt::WApplication::readConfigurationProperty("adminPassword", password);
-    if (defined && admin_password_->text().toUTF8() == password) {
+    if (admin_password_->text().toUTF8() == Application::read_config("adminPassword")) {
         fApp->set_admin();
         show_admin_widget_();
     } else {

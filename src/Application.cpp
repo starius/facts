@@ -38,6 +38,12 @@ Application* Application::instance() {
     return static_cast<Application*>(Wt::WApplication::instance());
 }
 
+std::string Application::read_config(const std::string& name) {
+    std::string result;
+    readConfigurationProperty(name, result);
+    return result;
+}
+
 std::string Application::fact_path(const FactPtr& fact) const {
     return str(fact_path_format_ % fact.id());
 }

@@ -36,6 +36,12 @@ public:
         return session_;
     }
 
+    /** Read a configuration property.
+    This is a convenience method which calls WApplication::readConfigurationProperty().
+    On fail return an empty string.
+    */
+    static std::string read_config(const std::string& name);
+
     /** Genarate internel path for the fact */
     std::string fact_path(const FactPtr& fact) const;
 
