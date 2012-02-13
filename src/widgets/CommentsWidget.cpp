@@ -68,13 +68,13 @@ public:
                 return o->deleted();
             }
         } else if (index.column() == index_column) {
-            if (role == Wt::InternalPathRole) {
-                return fApp->comment_path(o);
+            if (role == Wt::LinkRole) {
+                return Wt::WLink(Wt::WLink::InternalPath, fApp->comment_path(o));
             } else if (role == Wt::DisplayRole) {
                 return tr("facts.common.id_format").arg(o.id().index);
             }
-        } else if (index.column() == ip_column && role == Wt::InternalPathRole) {
-            return fApp->ip_path(o->ip());
+        } else if (index.column() == ip_column && role == Wt::LinkRole) {
+            return  Wt::WLink(Wt::WLink::InternalPath, fApp->ip_path(o->ip()));
         } else if (index.column() == text_column && role == Wt::DisplayRole) {
             if (o->deleted()) {
                 return tr("facts.comment.deleted");

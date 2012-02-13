@@ -43,9 +43,9 @@ public:
     boost::any data(const Wt::WModelIndex& index,
                     int role=Wt::DisplayRole) const {
         dbo::Transaction t(fApp->session());
-        if (role == Wt::InternalPathRole && index.column() == N_COLUMN) {
+        if (role == Wt::LinkRole && index.column() == N_COLUMN) {
             const FactPtr& o = resultRow(index.row());
-            return fApp->fact_path(o);
+            return Wt::WLink(Wt::WLink::InternalPath, fApp->fact_path(o));
         }
         return BaseQM::data(index, role);
     }
